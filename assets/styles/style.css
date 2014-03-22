@@ -1,0 +1,8 @@
+/* Put your CSS here */
+#footer {
+    margin-top:50px;
+    padding-top:10px;
+    border-top: 1px solid #ccc;
+    text-align: center;
+    color:#999;
+}

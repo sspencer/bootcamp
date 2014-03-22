@@ -1,0 +1,26 @@
+{
+    "bitwise":   true,
+    "browser":   true,
+    "camelcase": false,
+    "curly":     true,
+    "eqeqeq":    true,
+    "immed":     true,
+    "latedef":   true,
+    "newcap":    true,
+    "noarg":     true,
+    "node":      true,
+    "quotmark":  "both",
+    "regexp":    true,
+    "smarttabs": true,
+    "strict":    false,
+    "trailing":  false,
+    "undef":     true,
+    "unused":    "vars",
+    "white":     false,
+    "predef":    [
+        "_",
+        "$",
+        "jQuery"
+    ],
+    "-W099": true
+}
