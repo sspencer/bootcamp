@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="805 Bootcamp">
+
+    <title>805 Bootcamp</title>
+
+    <!-- build:css(assets) /styles/signin.css -->
+    <link rel="stylesheet" href="/vendor/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="/vendor/bootstrap/dist/css/bootstrap-theme.css">
+    <link rel="stylesheet" href="/styles/signin.css">
+    <!-- endbuild -->
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+
+    <div class="container">
+
+      <form class="form-signin" role="form" method="post">
+        <h2 class="form-signin-heading">805 Bootcamp</h2>
+        <h3 class="form-signin-heading">Please sign in:</h3>
+        <input type="email" class="form-control" placeholder="Email address" required autofocus>
+        <input type="password" class="form-control" placeholder="Password" required>
+        <label class="checkbox">
+          <input type="checkbox" value="remember-me"> Remember me
+        </label>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+      </form>
+
+    </div>
+
+    {{#if dev}}
+    <script src="http://localhost:35729/livereload.js"></script>
+    {{/if}}
+
+  </body>
+</html>
