@@ -88,8 +88,10 @@ exports.getCampers = multiline(function() {/*
         user
     WHERE
         lastName like CONCAT(?, '%')
+*/});
+/*
     ORDER BY
         lastName,
         firstName
     ASC;
-*/});
+*/

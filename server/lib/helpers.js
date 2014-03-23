@@ -1,6 +1,8 @@
 'use strict';
 
 var sprintf = require('sprintf').sprintf;
+var lo = require('lodash');
+
 
 /* Handlebar helpers. */
 var Months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
@@ -44,4 +46,28 @@ exports.alphaPager = function(selectedLetter) {
 
     html.push('</ul>');
     return html.join('');
+};
+
+exports.sort = function(baseUrl, query, title, name) {
+    var params = [];
+    if (baseUrl.indexOf('?') === -1) {
+        baseUrl += '?';
+    }
+
+    lo.forEach(query, function(value, name) {
+        if (name !== 'sort') {
+            params.push(sprintf('%s=%s', name, encodeURIComponent(value)));
+        }
+    });
+
+    if (params.length > 0) {
+        baseUrl += params.join('&');
+        baseUrl += '&';
+    }
+
+    if (query.sort === name) {
+        return sprintf('<a href="%ssort=-%s">%s</a>', baseUrl, name, title);
+    } else {
+        return sprintf('<a href="%ssort=%s">%s</a>', baseUrl, name, title);
+    }
 };

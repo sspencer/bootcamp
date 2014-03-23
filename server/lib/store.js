@@ -1,6 +1,7 @@
-var mysql = require('mysql');
-var config = require('../../config');
-var sql = require('./sql');
+var mysql   = require('mysql'),
+    config  = require('../../config'),
+    sql     = require('./sql'),
+    sprintf = require('sprintf').sprintf;
 
 var connection = mysql.createConnection({
   host:     config.mysql.host,
@@ -8,6 +9,22 @@ var connection = mysql.createConnection({
   password: config.mysql.password,
   database: config.mysql.database
 });
+
+// Data driven rather than program logic here :)
+var CampersSort = {
+    'id':               'id ASC',
+    '-id':              'id DESC',
+    'name':             'lastName ASC, firstName ASC',
+    '-name':            'lastName DESC, firstName ASC',
+    'yearStarted':      'yearStarted ASC, lastName ASC, firstName ASC',
+    '-yearStarted':     'yearStarted DESC, lastName ASC, firstName ASC',
+    'current_tour_id':  'current_tour_id ASC, lastName ASC, firstName ASC',
+    '-current_tour_id': 'current_tour_id DESC, lastName ASC, firstName ASC',
+    'camps':            'camps ASC, lastName ASC, firstName ASC',
+    '-camps':           'camps DESC, lastName ASC, firstName ASC',
+    'occupation':       'occupation ASC',
+    '-occupation':      'occupation DESC'
+};
 
 
 connection.connect();
@@ -54,9 +71,13 @@ exports.getTour = function(tourId, cb) {
     });
 };
 
-exports.getCampers = function( selectedLetter, cb) {
+exports.getCampers = function( selectedLetter, sort, cb) {
 
-    connection.query(sql.getCampers, [selectedLetter], function(err, rows) {
+    var sortOrder = CampersSort[sort] || CampersSort.name;
+
+    var stmt = sprintf('%s ORDER BY %s', sql.getCampers, sortOrder);
+
+    connection.query(stmt, [selectedLetter], function(err, rows) {
         if (err) {
             console.error(err);
             handleDisconnect();
