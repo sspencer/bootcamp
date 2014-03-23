@@ -1,0 +1,41 @@
+<ol class="breadcrumb">
+  <li><a href="/">Home</a>
+  <li><a href="/tours">Tours</a></li>
+  <li class="active">Tour {{ tourId }}</li>
+</ol>
+
+<div class="page-header">
+  <h1>Tour {{ tourId }}</h1>
+</div>
+
+<div>
+  <button type="button" class="btn btn-primary">
+    <span class="glyphicon glyphicon-bullhorn"></span> Rollcall
+  </button>
+  <button type="button" class="btn btn-primary">
+    <span class="glyphicon glyphicon-user"></span> Add Camper
+  </button>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Program</th>
+        <th>Group</th>
+        <th>Time</th>
+      </tr>
+    </thead>
+    <tbody>
+    {{#each tour}}
+    <tr>
+      <td><a href="/campers/{{ user_id }}">{{ firstName }} {{ lastName }}</a></td>
+      <td>{{capitalize workoutProgram}}</td>
+      <td>{{upper workoutGroup }}</td>
+      <td>{{fmtWorkoutTime workoutTime}}</td>
+    </tr>
+    {{/each}}
+    </tbody>
+  </table>
+</div>

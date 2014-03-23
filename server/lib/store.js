@@ -41,3 +41,15 @@ exports.getTours = function(cb) {
         }
     });
 };
+
+exports.getTour = function(tourId, cb) {
+    connection.query(sql.getTour, [tourId], function(err, rows) {
+        if (err) {
+            handleDisconnect();
+            console.error(err);
+            cb([]);
+        } else {
+            cb(rows);
+        }
+    });
+};
