@@ -50,6 +50,7 @@ exports.alphaPager = function(selectedLetter) {
 
 exports.sort = function(baseUrl, query, title, name) {
     var params = [];
+    var arrow = '';
     if (baseUrl.indexOf('?') === -1) {
         baseUrl += '?';
     }
@@ -65,9 +66,15 @@ exports.sort = function(baseUrl, query, title, name) {
         baseUrl += '&';
     }
 
+    if (query.sort === name || (!query.sort && name === 'name')) {
+        arrow = ' <small><span class="glyphicon glyphicon-arrow-down"></span></small>';
+    } else if (query.sort === ('-' + name)) {
+        arrow = ' <small><span class="glyphicon glyphicon-arrow-up"></span></small>';
+    }
+
     if (query.sort === name) {
-        return sprintf('<a href="%ssort=-%s">%s</a>', baseUrl, name, title);
+        return sprintf('<a href="%ssort=-%s">%s%s</a>', baseUrl, name, title, arrow);
     } else {
-        return sprintf('<a href="%ssort=%s">%s</a>', baseUrl, name, title);
+        return sprintf('<a href="%ssort=%s">%s%s</a>', baseUrl, name, title, arrow);
     }
 };
