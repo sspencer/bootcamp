@@ -1,4 +1,30 @@
-/* Put your CSS here */
+.navbar-static-top {
+  margin-bottom: 19px;
+}
+/*
+.breadcrumb {
+    background-color: #eee;
+}
+*/
+
+.pagination-805 > li > a,
+.pagination-805 > li > span {
+  padding: 2px 6px;
+  font-size: 16px;
+  width:30px;
+  text-align:center;
+}
+.pagination-805 > li:first-child > a,
+.pagination-805 > li:first-child > span {
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+.pagination-805 > li:last-child > a,
+.pagination-805 > li:last-child > span {
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
 #footer {
     margin-top:50px;
     padding:10px 0;

@@ -73,3 +73,23 @@ exports.getRollcall = multiline(function() {/*
         u.firstName
     ASC;
 */});
+/*
+*/
+exports.getCampers = multiline(function() {/*
+    SELECT
+        id,
+        firstName,
+        lastName,
+        yearStarted,
+        current_tour_id,
+        camps,
+        occupation
+    FROM
+        user
+    WHERE
+        lastName like CONCAT(?, '%')
+    ORDER BY
+        lastName,
+        firstName
+    ASC;
+*/});

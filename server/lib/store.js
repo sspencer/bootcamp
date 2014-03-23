@@ -53,3 +53,16 @@ exports.getTour = function(tourId, cb) {
         }
     });
 };
+
+exports.getCampers = function( selectedLetter, cb) {
+
+    connection.query(sql.getCampers, [selectedLetter], function(err, rows) {
+        if (err) {
+            console.error(err);
+            handleDisconnect();
+            cb([]);
+        } else {
+            cb(rows);
+        }
+    });
+};
