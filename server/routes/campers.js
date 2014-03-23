@@ -15,6 +15,7 @@ module.exports = function(app) {
             res.render('campers', {
                 title:          'Campers',
                 selectedLetter: selectedLetter,
+                baseUrl:        '/campers',
                 query:          req.query,
                 campers:        results,
                 tabCampers:     true});

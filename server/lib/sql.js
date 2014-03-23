@@ -47,10 +47,6 @@ exports.getTour = multiline(function() {/*
         c.user_id = u.id
         AND
         c.tour_id=?
-    ORDER BY
-        u.lastName,
-        u.firstName
-    ASC;
 */});
 
 exports.getRollcall = multiline(function() {/*
@@ -89,9 +85,3 @@ exports.getCampers = multiline(function() {/*
     WHERE
         lastName like CONCAT(?, '%')
 */});
-/*
-    ORDER BY
-        lastName,
-        firstName
-    ASC;
-*/

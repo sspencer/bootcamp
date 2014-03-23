@@ -26,6 +26,17 @@ var CampersSort = {
     '-occupation':      'occupation DESC'
 };
 
+var TourSort = {
+    'name':            'lastName ASC, firstName ASC',
+    '-name':           'lastName DESC, firstName ASC',
+    'workoutProgram':  'workoutProgram ASC, lastName ASC, firstName ASC',
+    '-workoutProgram': 'workoutProgram DESC, lastName ASC, firstName ASC',
+    'workoutGroup':    'workoutGroup ASC, lastName ASC, firstName ASC',
+    '-workoutGroup':   'workoutGroup DESC, lastName ASC, firstName ASC',
+    'workoutTime':     'workoutTime ASC, lastName ASC, firstName ASC',
+    '-workoutTime':    'workoutTime DESC, lastName ASC, firstName ASC'
+};
+
 
 connection.connect();
 
@@ -59,8 +70,10 @@ exports.getTours = function(cb) {
     });
 };
 
-exports.getTour = function(tourId, cb) {
-    connection.query(sql.getTour, [tourId], function(err, rows) {
+exports.getTour = function(tourId, sort, cb) {
+    var sortOrder = TourSort[sort] || TourSort.name;
+    var stmt = sprintf('%s ORDER BY %s', sql.getTour, sortOrder);
+    connection.query(stmt, [tourId], function(err, rows) {
         if (err) {
             handleDisconnect();
             console.error(err);
@@ -71,10 +84,8 @@ exports.getTour = function(tourId, cb) {
     });
 };
 
-exports.getCampers = function( selectedLetter, sort, cb) {
-
+exports.getCampers = function(selectedLetter, sort, cb) {
     var sortOrder = CampersSort[sort] || CampersSort.name;
-
     var stmt = sprintf('%s ORDER BY %s', sql.getCampers, sortOrder);
 
     connection.query(stmt, [selectedLetter], function(err, rows) {
