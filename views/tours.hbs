@@ -8,6 +8,32 @@
   <h1>Tours</h1>
 </div>
 
-<div class="container">
-  <p>table of all tours...</p>
+
+<div>
+  <button type="button" class="btn btn-primary">
+    <span class="glyphicon glyphicon-plus"></span> Add Tour
+  </button>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Tour</th>
+        <th>Start</th>
+        <th>End</th>
+        <th>Campers</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each tours}}
+      <tr>
+        <td><a href="/tours/{{id}}">{{id}}</a></td>
+        <td>{{fmtDate startDate}}</td>
+        <td>{{fmtDate endDate}}</td>
+        <td>{{numCampers}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
 </div>

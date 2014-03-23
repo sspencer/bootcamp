@@ -7,7 +7,8 @@ var express = require('express'),
     exphbs  = require('express3-handlebars'),
     config  = require('./config'),
     routes  = require('./server/routes'),
-    fs      = require('fs');
+    fs      = require('fs'),
+    helpers = require('./server/lib/helpers');
 
 
 
@@ -27,7 +28,8 @@ function developmentApp() {
         extname:       '.hbs',
         defaultLayout: 'main',
         layoutsDir:    'views/layouts/',
-        partialsDir:   'views/partials/'
+        partialsDir:   'views/partials/',
+        helpers:       helpers
     });
 
 
@@ -45,7 +47,8 @@ function productionApp() {
         extname:       '.hbs',
         defaultLayout: 'main',
         layoutsDir:    'dist/views/layouts/',
-        partialsDir:   'dist/views/partials/'
+        partialsDir:   'dist/views/partials/',
+        helpers:       helpers
     });
 
     app.engine('hbs', hbs.engine);

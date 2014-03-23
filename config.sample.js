@@ -21,7 +21,8 @@ var config = {
     mysql:   {
         username: "the username",
         password: "the password",
-        database: "the databse name"
+        database: "the databse name",
+        host:     "mysql host like 127.0.0.1"
     },
     redis:   {
         server:   "localhost",

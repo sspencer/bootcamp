@@ -1,7 +1,11 @@
 'use strict';
 
+var store = require('../lib/store');
+
 module.exports = function(app) {
     app.get('/tours', function(req, res, next) {
-        res.render('tours', {title: 'Tours', tabTours: true});
+        store.getTours(function(results) {
+            res.render('tours', {title: 'Tours', tours: results, tabTours: true});
+        });
     });
 };
