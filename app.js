@@ -48,10 +48,7 @@ function productionApp() {
         helpers:       helpers
     });
 
-    app.use(express.logger({
-        format:'default',
-        stream: fs.createWriteStream('/var/log/node/dashboard.log')
-    }));
+    app.use(express.logger({format:'default'}));
 
     app.engine('hbs', hbs.engine);
     app.enable('view cache');
