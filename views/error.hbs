@@ -1,0 +1,8 @@
+<div class="container">
+  <h1>{{message}}</h1>
+	{{#if error.stack}}
+	<h2>Stacktrace <small>(development mode only)</small></h2>
+	<pre>{{error.stack}}</pre>
+	{{/if}}
+</div>
+
