@@ -35,12 +35,14 @@ var config = {
 var environment = {
     development: {
         server: {
-            port: 3000
+            session_secret: "some secret",
+            port:           3000
         }
     },
     production: {
         server: {
-            port: 8080
+            session_secret: "some other secret",
+            port:           4000
         }
     }
 };

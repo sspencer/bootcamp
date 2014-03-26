@@ -6,8 +6,9 @@ module.exports = function(app) {
     app.get('/tours', function(req, res, next) {
         store.getTours(function(results) {
             res.render('tours', {
-                title: 'Tours',
-                tours: results,
+                title:    'Tours',
+                user:     req.user,
+                tours:    results,
                 tabTours: true});
         });
     });
@@ -20,6 +21,7 @@ module.exports = function(app) {
             var title = 'Tour ' + tourId;
             res.render('tour', {
                 title:    title,
+                user:     req.user,
                 baseUrl:  '/tours/' + tourId,
                 query:    req.query,
                 tourId:   tourId,

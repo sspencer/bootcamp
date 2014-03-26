@@ -50,6 +50,16 @@
             <li><a href="/campers">Campers</a></li>
             {{/if}}
           </ul>
+          {{#if hideLoginLink}}
+          {{else}}
+          <ul class="nav navbar-nav navbar-right">
+            {{#if user}}
+            <li><a href="/logout">Logout</a></li>
+            {{else}}
+            <li><a href="/login">Login</a></li>
+            {{/if}}
+          </ul>
+          {{/if}}
         </div>
       </div>
     </div>

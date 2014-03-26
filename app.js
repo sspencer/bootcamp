@@ -3,17 +3,14 @@
 /*
  * Express Dependencies
  */
-var express = require('express'),
-    exphbs  = require('express3-handlebars'),
-    config  = require('./config'),
-    routes  = require('./server/routes'),
-    fs      = require('fs'),
-    helpers = require('./server/lib/helpers');
-
-
-
-var app          = express(),
-    loggerConfig = null;
+var express  = require('express'),
+    exphbs   = require('express3-handlebars'),
+    config   = require('./config'),
+    routes   = require('./server/routes'),
+    userauth = require('./server/lib/userauth'),
+    fs       = require('fs'),
+    helpers  = require('./server/lib/helpers'),
+    app      = express();
 
 app.locals({
   dev: app.get('env') === 'development',
@@ -32,9 +29,9 @@ function developmentApp() {
         helpers:       helpers
     });
 
+    app.use(express.logger({format:'dev'}));
 
     app.engine('hbs', hbs.engine);
-
     app.set('views', __dirname + '/views');
     app.set('view engine', 'hbs');
 
@@ -51,9 +48,13 @@ function productionApp() {
         helpers:       helpers
     });
 
+    app.use(express.logger({
+        format:'default',
+        stream: fs.createWriteStream('/var/log/node/dashboard.log')
+    }));
+
     app.engine('hbs', hbs.engine);
     app.enable('view cache');
-
     app.set('views', __dirname + '/dist/views');
     app.set('view engine', 'hbs');
 
@@ -63,29 +64,16 @@ function productionApp() {
 
 if (app.get('env') === 'development') {
     developmentApp();
-    loggerConfig = {format:'dev'};
 } else {
     productionApp();
-
-    loggerConfig = {
-        format:'default',
-        stream: fs.createWriteStream('/var/log/node/dashboard.log')
-    };
 }
 
 app.use(express.urlencoded());
 app.use(express.methodOverride());
-app.use(app.router);
-app.use(express.bodyParser());
 app.use(express.cookieParser());
-app.use(express.logger(loggerConfig));
+app.use(express.session({ secret:  config.server.session_secret}));
 
-app.use(function (req, res) {
-    res.status(404).render('404', {title: 'Not Found :('});
-});
-
-app.use(express.errorHandler());
-
+userauth(app);
 routes(app);
 
 app.listen(app.get('port'), function () {

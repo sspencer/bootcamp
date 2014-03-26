@@ -14,6 +14,7 @@ module.exports = function(app) {
         store.getCampers(selectedLetter, sort, function(results) {
             res.render('campers', {
                 title:          'Campers',
+                user:           req.user,
                 selectedLetter: selectedLetter,
                 baseUrl:        '/campers',
                 query:          req.query,
