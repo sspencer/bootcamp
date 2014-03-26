@@ -65,8 +65,8 @@ exports.getRollcall = multiline(function() {/*
         AND
         c.user_id = u.id
     ORDER BY
-        u.lastName,
-        u.firstName
+        u.firstName,
+        u.lastName
     ASC;
 */});
 /*
@@ -83,5 +83,5 @@ exports.getCampers = multiline(function() {/*
     FROM
         user
     WHERE
-        lastName like CONCAT(?, '%')
+        firstName like CONCAT(?, '%')
 */});

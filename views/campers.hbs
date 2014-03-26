@@ -4,7 +4,7 @@
 </ol>
 
 <div class="page-header">
-  <h1>Campers <small>by last name: {{upper selectedLetter}}</small></h1>
+  <h1>Campers <small>by first name: {{upper selectedLetter}}</small></h1>
 </div>
 
 <div class="container">
@@ -33,6 +33,10 @@
       <td>{{ current_tour_id }}</td>
       <td>{{ camps }}</td>
       <td>{{ occupation }}</td>
+    </tr>
+    {{else}}
+    <tr>
+    <td colspan=6><h4>No campers with that name!</h4></td>
     </tr>
     {{/each}}
     </tbody>
