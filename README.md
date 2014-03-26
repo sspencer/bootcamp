@@ -9,3 +9,4 @@ Web app for my local (exercise) bootcamp using combination of Node/Express using
 * [nginx, varnish, monit, upstart](http://blog.dealspotapp.com/post/40184153657/node-js-production-deployment-with-nginx-varnish)
 * [monit](http://www.unixmen.com/install-and-configure-monit-on-centos-rhel-ubuntu-debian/)
 
+Git push not working yet...
