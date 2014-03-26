@@ -18,12 +18,19 @@ var config = {
     name:    project.name,
     version: project.version,
     env:     env,
+
+    users: [
+        { id: 1, username: 'admin', password: 'admin1', admin: 1 },
+        { id: 2, username: 'user',  password: 'user1',  admin: 0 }
+    ],
+
     mysql:   {
         username: "the username",
         password: "the password",
         database: "the databse name",
         host:     "mysql host like 127.0.0.1"
     },
+
     redis:   {
         server:   "localhost",
         post:     6379,

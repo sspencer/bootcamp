@@ -30,17 +30,18 @@
       <form class="form-signin" role="form" method="post">
         <h2 class="form-signin-heading">805 Bootcamp</h2>
         <h3 class="form-signin-heading">Please sign in:</h3>
+        {{#if message}}
+        <div class="alert alert-danger">
+        {{message}}
+        </div>
+        {{/if}}
+
         <input type="text" name="username" value="" class="form-control" placeholder="Email address" required autofocus>
         <input type="password" name="password" class="form-control" placeholder="Password" required>
         <label class="checkbox">
           <input type="checkbox" value="remember-me"> Remember me
         </label>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-        {{#if message}}
-        <div class="alert alert-danger">
-        {{message}}
-        </div>
-        {{/if}}
 
       </form>
 

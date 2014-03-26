@@ -1,15 +1,8 @@
 var passport      = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var flash         = require('connect-flash');
-
+var users         = require('../../config').users;
 var DBG = true;
-
-// Temporary for testing
-var users = [
-    { id: 1, username: 'admin', password: 'admin1', admin: 1 },
-    { id: 2, username: 'user',  password: 'user1',  admin: 0 }
-];
-
 
 function findByUserId(id, fn) {
     if (DBG) { console.log('FIND BY USER ID(%d)', id); }
