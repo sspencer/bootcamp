@@ -3,14 +3,16 @@
 /*
  * Express Dependencies
  */
-var express  = require('express'),
-    exphbs   = require('express3-handlebars'),
-    config   = require('./config'),
-    routes   = require('./server/routes'),
-    userauth = require('./server/lib/userauth'),
-    fs       = require('fs'),
-    helpers  = require('./server/lib/helpers'),
-    app      = express();
+var express    = require('express'),
+    exphbs     = require('express3-handlebars'),
+    config     = require('./config'),
+    redis      = require('server/lib/redis').client,
+    RedisStore = require('connect-redis')(express),
+    routes     = require('./server/routes'),
+    userauth   = require('./server/lib/userauth'),
+    fs         = require('fs'),
+    helpers    = require('./server/lib/helpers'),
+    app        = express();
 
 app.locals({
   dev: app.get('env') === 'development',
@@ -68,7 +70,11 @@ if (app.get('env') === 'development') {
 app.use(express.urlencoded());
 app.use(express.methodOverride());
 app.use(express.cookieParser());
-app.use(express.session({ secret:  config.server.session_secret}));
+app.use(express.session({
+    secret: config.server.session_secret,
+    store:  new RedisStore({client: redis, prefix: 'sess:805:' }),
+    cookie: { maxAge:24*3600*1000 }
+}));
 
 userauth(app);
 routes(app);

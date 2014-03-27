@@ -32,8 +32,8 @@ var config = {
     },
 
     redis:   {
-        server:   "localhost",
-        post:     6379,
+        host:   "localhost",
+        port:     6379,
         database: 0
     }
 };
