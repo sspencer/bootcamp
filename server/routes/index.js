@@ -28,10 +28,9 @@ module.exports = function(app) {
      *************************************************************************************/
     app.get('/login', function(req, res){
         res.render('', {
-            layout:'signin',
-            user: req.user,
-            message:
-            req.flash('error')
+            layout:  'signin',
+            user:    req.user,
+            message: req.flash('error')
         });
     });
 
@@ -60,11 +59,13 @@ module.exports = function(app) {
      * Errors
      *************************************************************************************/
 
-    // This is the last route and will catch everything not already served.
+    // 404 This is the last route and will catch everything not already served.
     app.use(function (req, res, next) {
-        var err = new Error('Page not Found');
-        err.status = 404;
-        next(err);
+        res.status(404).render('404', {
+            layout: 'error',
+            title:  'Page Not found',
+            url: req.url
+        });
     });
 
     // Display errors.
@@ -74,7 +75,8 @@ module.exports = function(app) {
         var title = sprintf('%d %s', err.status, err.message);
 
         // Prevents stacktrace leakage by passing (error = {}) in production
-        res.status(err.status).render('error', {
+        res.status(err.status).render('50X', {
+            layout:  'error',
             title:   title,
             message: title,
             error:   (app.get('env') === 'development' ? err : {})

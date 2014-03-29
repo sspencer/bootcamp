@@ -6,11 +6,10 @@
 var express    = require('express'),
     exphbs     = require('express3-handlebars'),
     config     = require('./config'),
-    redis      = require('server/lib/redis').client,
+    redis      = require('./server/lib/redis'),
     RedisStore = require('connect-redis')(express),
     routes     = require('./server/routes'),
     userauth   = require('./server/lib/userauth'),
-    fs         = require('fs'),
     helpers    = require('./server/lib/helpers'),
     app        = express();
 
@@ -72,7 +71,7 @@ app.use(express.methodOverride());
 app.use(express.cookieParser());
 app.use(express.session({
     secret: config.server.session_secret,
-    store:  new RedisStore({client: redis, prefix: 'sess:805:' }),
+    store:  new RedisStore({client: redis, prefix: 'sess:' }),
     cookie: { maxAge:24*3600*1000 }
 }));
 

@@ -19,10 +19,11 @@ var config = {
     version: project.version,
     env:     env,
 
-    users: [
-        { id: 1, username: 'admin', password: 'admin1', admin: 1 },
-        { id: 2, username: 'user',  password: 'user1',  admin: 0 }
-    ],
+    auth: {
+        cryptIterations: 10000,
+        cryptKeyLen:     128,
+        saltLen:         128
+    },
 
     mysql:   {
         username: "the username",

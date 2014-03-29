@@ -1,3 +1,5 @@
+'use strict';
+
 var mysql   = require('mysql'),
     config  = require('../../config'),
     sql     = require('./sql'),

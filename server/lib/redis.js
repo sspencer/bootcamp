@@ -1,3 +1,5 @@
+'use strict';
+
 var redis  = require('redis');
 var config = require('../../config');
 
@@ -10,4 +12,4 @@ var redisClient = redis.createClient(
 // Select Redis database number (0 is productiob)
 redisClient.selected_db = (config.redis.database || 0);
 
-exports.client = redisClient;
+module.exports = redisClient;

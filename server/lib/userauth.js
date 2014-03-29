@@ -1,46 +1,54 @@
-var passport      = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-var flash         = require('connect-flash');
-var users         = require('../../config').users;
-var DBG = true;
+'use strict';
 
-function findByUserId(id, fn) {
-    if (DBG) { console.log('FIND BY USER ID(%d)', id); }
-    var idx = id - 1;
-    if (users[idx]) {
-        fn(null, users[idx]);
-    } else {
-        fn(new Error('User ' + id + ' does not exist'));
-    }
-}
+var passport      = require('passport'),
+    LocalStrategy = require('passport-local').Strategy,
+    flash         = require('connect-flash'),
+    keys          = require('./keys'),
+    redis         = require('./redis'),
+    crypto        = require('crypto'),
+    config        = require('../../config');
 
-function findByUsername(username, fn) {
-    if (DBG) { console.log('FIND BY USER NAME(%s)', username); }
-    var i, user, len;
-    for (i = 0, len = users.length; i < len; i++) {
-        user = users[i];
-        if (user.username === username) {
-            return fn(null, user);
-        }
-    }
 
-    return fn(new Error('User does not exist'), null);
-}
-
-function verifyUser(username, password, done) {
-    if (DBG) { console.log('VERIFY USER(%s, %s)', username, password); }
-    findByUsername(username, function(err, user) {
-        if (user === null) {
-            done(new Error("User with that name/password does not exist."), null);
+function findByUserId(id, done) {
+    redis.hgetall(keys.userAcct(id), function(err, account) {
+        if (account) {
+            done(null, account);
         } else {
-            if (user.password.trim() === password.trim()) {
-                done(null, user);
-            } else {
-                done(new Error("User with that name/password does not exist."), null);
-            }
+            done(new Error('User ' + userId + ' does not exist'), null);
         }
     });
 }
+
+function verifyUser(username, password, done)
+{
+    var msg = "Incorrect username or password.";
+
+    redis.get(keys.userId(username), function(err, userId) {
+        if (err) {
+            done(err, null);
+            return;
+        }
+
+        redis.hgetall(keys.userAcct(userId), function(err, account) {
+            if (account === null) {
+                done(new Error(msg), null);
+                return;
+            }
+
+            var salt = new Buffer(account.salt, 'base64');
+            crypto.pbkdf2(password, salt, config.auth.cryptIterations, config.auth.cryptKeyLen, function(err, hashword) {
+                if (err) {
+                    done(msg, null);
+                } else if (hashword.toString('base64') === account.hash) {
+                    done(null, account);
+                } else {
+                    done(new Error(msg), null);
+                }
+            });
+        });
+    });
+}
+
 
 // Passport session setup.
 //   To support persistent login sessions, Passport needs to be able to
@@ -48,12 +56,10 @@ function verifyUser(username, password, done) {
 //   this will be as simple as storing the user ID when serializing, and finding
 //   the user by ID when deserializing.
 passport.serializeUser(function(account, done) {
-    if (DBG) { console.log('SERIALIAZE USER(%j)', account); }
     done(null, account.id);
 });
 
 passport.deserializeUser(function(id, done) {
-    if (DBG) { console.log('DESERIALIZE USER(%d)', id); }
     findByUserId(id, function (err, account) {
         done(err, account);
     });
@@ -73,7 +79,6 @@ passport.use(new LocalStrategy(
             // indicate failure and set a flash message.  Otherwise, return the
             // authenticated `user`.
             verifyUser(username, password, function(err, account) {
-                if (DBG) { console.log('LOCAL VERIFY USER(%s, %s): %j', username, password, account); }
                 if (account) { return done(null, account); }
                 return done(null, false, { message: 'Unknown user or password'});
             });

@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="805 Bootcamp">
 
-    <title>805 Bootcamp</title>
+    <title>805 Bootcamp: {{title}}</title>
 
     <!-- build:css(assets) /styles/signin.css -->
     <link rel="stylesheet" href="/vendor/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="/vendor/bootstrap/dist/css/bootstrap-theme.css">
-    <link rel="stylesheet" href="/styles/signin.css">
+    <link rel="stylesheet" href="/styles/error.css">
     <!-- endbuild -->
 
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
@@ -25,24 +25,21 @@
   </head>
   <body>
 
-    <div class="container">
-
-      <form class="form-signin" role="form" method="post">
-        <h2 class="form-signin-heading">805 Bootcamp</h2>
-        <h3 class="form-signin-heading">Please sign in:</h3>
-        {{#if message}}
-        <div class="alert alert-danger">
-        {{message}}
+    <div class="navbar navbar-inverse navbar-static-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">805 Bootcamp</a>
         </div>
-        {{/if}}
-
-        <input type="text" name="username" value="" class="form-control" placeholder="Username" required autofocus>
-        <input type="password" name="password" class="form-control" placeholder="Password" required>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-
-      </form>
-
+      </div>
     </div>
+
+    {{{body}}}
 
     {{#if dev}}
     <script src="http://localhost:35729/livereload.js"></script>
