@@ -3,7 +3,7 @@
 'use strict';
 
 var crypto  = require('crypto'),
-    path    = require('fs'),
+    path    = require('path'),
     sprintf = require('sprintf').sprintf,
     lo      = require('lodash'),
     redis   = require('../server/lib/redis'),
@@ -14,7 +14,7 @@ var uid, username, password;
 
 // Insert user account into redis
 if (process.argv.length !== 5) {
-    console.err(sprintf('USAGE %s userid username password', path.basename(process.argv[1])));
+    console.error(sprintf('USAGE %s userid username password', path.basename(process.argv[1])));
     process.exit(1);
 }
 

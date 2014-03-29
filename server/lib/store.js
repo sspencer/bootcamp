@@ -16,27 +16,27 @@ var connection = mysql.createConnection({
 var CampersSort = {
     'id':               'id ASC',
     '-id':              'id DESC',
-    'name':             'lastName ASC, firstName ASC',
-    '-name':            'lastName DESC, firstName ASC',
-    'yearStarted':      'yearStarted ASC, lastName ASC, firstName ASC',
-    '-yearStarted':     'yearStarted DESC, lastName ASC, firstName ASC',
-    'current_tour_id':  'current_tour_id ASC, lastName ASC, firstName ASC',
-    '-current_tour_id': 'current_tour_id DESC, lastName ASC, firstName ASC',
-    'camps':            'camps ASC, lastName ASC, firstName ASC',
-    '-camps':           'camps DESC, lastName ASC, firstName ASC',
+    'name':             'firstName ASC, lastName ASC',
+    '-name':            'firstName DESC, lastName ASC',
+    'yearStarted':      'yearStarted ASC, firstName ASC, lastName ASC',
+    '-yearStarted':     'yearStarted DESC, firstName ASC, lastName ASC',
+    'current_tour_id':  'current_tour_id ASC, firstName ASC, lastName ASC',
+    '-current_tour_id': 'current_tour_id DESC, firstName ASC, lastName ASC',
+    'camps':            'camps ASC, firstName ASC, lastName ASC',
+    '-camps':           'camps DESC, firstName ASC, lastName ASC',
     'occupation':       'occupation ASC',
     '-occupation':      'occupation DESC'
 };
 
 var TourSort = {
-    'name':            'lastName ASC, firstName ASC',
-    '-name':           'lastName DESC, firstName ASC',
-    'workoutProgram':  'workoutProgram ASC, lastName ASC, firstName ASC',
-    '-workoutProgram': 'workoutProgram DESC, lastName ASC, firstName ASC',
-    'workoutGroup':    'workoutGroup ASC, lastName ASC, firstName ASC',
-    '-workoutGroup':   'workoutGroup DESC, lastName ASC, firstName ASC',
-    'workoutTime':     'workoutTime ASC, lastName ASC, firstName ASC',
-    '-workoutTime':    'workoutTime DESC, lastName ASC, firstName ASC'
+    'name':            'firstName ASC, lastName ASC',
+    '-name':           'firstName DESC, lastName ASC',
+    'workoutProgram':  'workoutProgram ASC, firstName ASC, lastName ASC',
+    '-workoutProgram': 'workoutProgram DESC, firstName ASC, lastName ASC',
+    'workoutGroup':    'workoutGroup ASC, firstName ASC, lastName ASC',
+    '-workoutGroup':   'workoutGroup DESC, firstName ASC, lastName ASC',
+    'workoutTime':     'workoutTime ASC, firstName ASC, lastName ASC',
+    '-workoutTime':    'workoutTime DESC, firstName ASC, lastName ASC'
 };
 
 
@@ -94,6 +94,18 @@ exports.getCampers = function(selectedLetter, sort, cb) {
         if (err) {
             console.error(err);
             handleDisconnect();
+            cb([]);
+        } else {
+            cb(rows);
+        }
+    });
+};
+
+exports.getRollcall = function(tourId, cb) {
+    connection.query(sql.getRollcall, [tourId], function(err, rows) {
+        if (err) {
+            handleDisconnect();
+            console.error(err);
             cb([]);
         } else {
             cb(rows);

@@ -48,6 +48,22 @@ exports.alphaPager = function(selectedLetter) {
     return html.join('');
 };
 
+exports.weekTabs = function(selectedWeek) {
+    var i, html = [], selectedWeek = lo.parseInt(selectedWeek);
+    html.push('<ul class="nav nav-tabs">');
+
+    for (i = 1; i <= 6; i++) {
+        if (i === selectedWeek) {
+            html.push(sprintf('<li class="active"><a href="#">Week %d</a></li>', i));
+        } else {
+            html.push(sprintf('<li><a href="?week=%d">Week %d</a></li>', i, i));
+        }
+    }
+
+    html.push('</ul>');
+    return html.join('');
+}
+
 exports.sort = function(baseUrl, query, title, name) {
     var params = [];
     var arrow = '';

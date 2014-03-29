@@ -69,8 +69,7 @@ exports.getRollcall = multiline(function() {/*
         u.lastName
     ASC;
 */});
-/*
-*/
+
 exports.getCampers = multiline(function() {/*
     SELECT
         id,
