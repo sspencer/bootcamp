@@ -23,15 +23,24 @@
         <th>{{{sort baseUrl query 'Program' 'workoutProgram'}}}</th>
         <th>{{{sort baseUrl query 'Group'   'workoutGroup'}}}</th>
         <th>{{{sort baseUrl query 'Time'    'workoutTime'}}}</th>
+        <th>Attendance</th>
       </tr>
     </thead>
     <tbody>
-    {{#each tour}}
+    {{#each campers}}
     <tr>
       <td><a href="/campers/{{ user_id }}">{{ firstName }} {{ lastName }}</a></td>
       <td>{{capitalize workoutProgram}}</td>
       <td>{{upper workoutGroup }}</td>
       <td>{{fmtWorkoutTime workoutTime}}</td>
+      <td>
+        {{#if perfect}}
+        <span class="glyphicon glyphicon-star"></span>
+        {{else}}
+        &nbsp;&nbsp;&nbsp;
+        {{/if}}
+        &nbsp;{{attendance}}
+      </td>
     </tr>
     {{/each}}
     </tbody>

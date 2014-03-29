@@ -33,6 +33,15 @@ exports.getTours = multiline(function() {/*
 
 exports.getTour = multiline(function() {/*
     SELECT
+        *
+    FROM
+        tour
+    WHERE
+        id = ?
+*/});
+
+exports.getTourCampers = multiline(function() {/*
+    SELECT
         c.user_id,
         u.firstName,
         u.lastName,
@@ -55,7 +64,8 @@ exports.getRollcall = multiline(function() {/*
         c.user_id,
         c.rollcall,
         u.firstName,
-        u.lastName
+        u.lastName,
+        c.workoutProgram
     FROM
         camp c
     INNER JOIN

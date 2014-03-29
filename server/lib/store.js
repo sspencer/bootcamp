@@ -65,23 +65,35 @@ exports.getTours = function(cb) {
         if (err) {
             handleDisconnect();
             console.error(err);
-            cb([]);
+            cb(err, null);
         } else {
-            cb(rows);
+            cb(null, rows);
         }
     });
 };
 
-exports.getTour = function(tourId, sort, cb) {
+exports.getTour = function(tourId, cb) {
+    connection.query(sql.getTour, [tourId], function(err, rows) {
+        if (err) {
+            handleDisconnect();
+            console.error(err);
+            cb(err, null);
+        } else {
+            cb(null, rows[0]);
+        }
+    });
+};
+
+exports.getTourCampers = function(tourId, sort, cb) {
     var sortOrder = TourSort[sort] || TourSort.name;
-    var stmt = sprintf('%s ORDER BY %s', sql.getTour, sortOrder);
+    var stmt = sprintf('%s ORDER BY %s', sql.getTourCampers, sortOrder);
     connection.query(stmt, [tourId], function(err, rows) {
         if (err) {
             handleDisconnect();
             console.error(err);
-            cb([]);
+            cb(err, null);
         } else {
-            cb(rows);
+            cb(null, rows);
         }
     });
 };
@@ -94,9 +106,9 @@ exports.getCampers = function(selectedLetter, sort, cb) {
         if (err) {
             console.error(err);
             handleDisconnect();
-            cb([]);
+            cb(err, null);
         } else {
-            cb(rows);
+            cb(null, rows);
         }
     });
 };
@@ -106,9 +118,9 @@ exports.getRollcall = function(tourId, cb) {
         if (err) {
             handleDisconnect();
             console.error(err);
-            cb([]);
+            cb(err, null);
         } else {
-            cb(rows);
+            cb(null, rows);
         }
     });
 };

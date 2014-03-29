@@ -49,7 +49,8 @@ exports.alphaPager = function(selectedLetter) {
 };
 
 exports.weekTabs = function(selectedWeek) {
-    var i, html = [], selectedWeek = lo.parseInt(selectedWeek);
+    var i, html = [];
+    selectedWeek = lo.parseInt(selectedWeek);
     html.push('<ul class="nav nav-tabs">');
 
     for (i = 1; i <= 6; i++) {
@@ -62,7 +63,7 @@ exports.weekTabs = function(selectedWeek) {
 
     html.push('</ul>');
     return html.join('');
-}
+};
 
 exports.sort = function(baseUrl, query, title, name) {
     var params = [];
