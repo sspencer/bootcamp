@@ -48,7 +48,13 @@ exports.getTourCampers = multiline(function() {/*
         c.workoutTime,
         c.workoutGroup,
         c.workoutProgram,
-        c.rollcall
+        c.rollcall,
+        c.mile1,
+        c.mile2,
+        c.pushup1,
+        c.pushup2,
+        c.situp1,
+        c.situp2
     FROM
         camp c,
         user u

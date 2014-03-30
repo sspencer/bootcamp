@@ -24,6 +24,12 @@ exports.fmtWorkoutTime = function(str) {
     return sprintf('%s:%s', str.substr(0, 1), str.substr(1).toUpperCase());
 };
 
+exports.mile = function(str) {
+    var n = lo.parseInt(str);
+    return sprintf("%d:%02d", Math.floor(n/60), n%60);
+};
+
+
 exports.alphaPager = function(selectedLetter) {
     var i, ch, html = [];
     var alphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];

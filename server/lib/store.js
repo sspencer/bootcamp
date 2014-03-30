@@ -36,7 +36,19 @@ var TourSort = {
     'workoutGroup':    'workoutGroup ASC, firstName ASC, lastName ASC',
     '-workoutGroup':   'workoutGroup DESC, firstName ASC, lastName ASC',
     'workoutTime':     'workoutTime ASC, firstName ASC, lastName ASC',
-    '-workoutTime':    'workoutTime DESC, firstName ASC, lastName ASC'
+    '-workoutTime':    'workoutTime DESC, firstName ASC, lastName ASC',
+    'pushup1':         'pushup1 ASC, firstName ASC, lastName ASC',
+    '-pushup1':        'pushup1 DESC, firstName ASC, lastName ASC',
+    'situp1':          'situp1 ASC, firstName ASC, lastName ASC',
+    '-situp1':         'situp1 DESC, firstName ASC, lastName ASC',
+    'mile1':           'mile1 ASC, firstName ASC, lastName ASC',
+    '-mile1':          'mile1 DESC, firstName ASC, lastName ASC',
+    'situp2':          'situp2 ASC, firstName ASC, lastName ASC',
+    '-situp2':         'situp2 DESC, firstName ASC, lastName ASC',
+    'push2':           'push2 ASC, firstName ASC, lastName ASC',
+    '-push2':          'push2 DESC, firstName ASC, lastName ASC',
+    'mile2':           'mile2 ASC, firstName ASC, lastName ASC',
+    '-mile2':          'mile2 DESC, firstName ASC, lastName ASC',
 };
 
 

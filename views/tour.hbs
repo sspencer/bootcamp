@@ -4,13 +4,20 @@
   <li class="active">Tour {{ tourId }}</li>
 </ol>
 
+
 <div class="page-header">
   <h1>Tour {{ tourId }}</h1>
 </div>
 
+<ul class="nav nav-tabs">
+  <li class="active"><a href="#">Campers</a></li>
+  <li><a href="/tours/{{tourId}}/payments">Payments</a></li>
+</ul>
+<p>&nbsp;</p>
 <div>
   <p>
     <a href="/tours/{{tourId}}/rollcall" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-bullhorn"></span> Rollcall</a>
+    <a href="/tours/{{tourId}}/activity" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-heart"></span> Activity</a>
     <a href="/tours/{{tourId}}/addcamper" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-user"></span> Add Camper</a>
   </p>
 </div>
@@ -18,12 +25,26 @@
 <div class="table-responsive">
   <table class="table table-striped">
     <thead>
+
       <tr>
-        <th>{{{sort baseUrl query 'Name'    'name'}}}</th>
-        <th>{{{sort baseUrl query 'Program' 'workoutProgram'}}}</th>
-        <th>{{{sort baseUrl query 'Group'   'workoutGroup'}}}</th>
-        <th>{{{sort baseUrl query 'Time'    'workoutTime'}}}</th>
-        <th>Attendance</th>
+        <th rowspan=2>{{{sort baseUrl query 'Name'    'name'}}}</th>
+        <th rowspan=2>{{{sort baseUrl query 'Program' 'workoutProgram'}}}</th>
+        <th rowspan=2>{{{sort baseUrl query 'Group'   'workoutGroup'}}}</th>
+        <th rowspan=2>{{{sort baseUrl query 'Time'    'workoutTime'}}}</th>
+        <th rowspan=2 >Attendance</th>
+        <th colspan=6 style="padding:0">
+          <div align=center>
+          Pushups / Situps / Mile
+          </div>
+        </th>
+      </tr>
+      <tr>
+        <th style="border-top-width:0px;"><div>{{{sort baseUrl query 'PU 1'    'pushup1'}}}</div></th>
+        <th style="border-top-width:0px;"><div>{{{sort baseUrl query 'SU 1'    'situp1'}}}</div></th>
+        <th style="border-top-width:0px;"><div>{{{sort baseUrl query 'MI 1'    'mile1'}}}</div></th>
+        <th style="border-top-width:0px;"><div>{{{sort baseUrl query 'PU 2'    'pushup2'}}}</div></th>
+        <th style="border-top-width:0px;"><div>{{{sort baseUrl query 'SU 2'    'situp2'}}}</div></th>
+        <th style="border-top-width:0px;"><div>{{{sort baseUrl query 'MI 2'    'mile2'}}}</div></th>
       </tr>
     </thead>
     <tbody>
@@ -41,6 +62,12 @@
         {{/if}}
         &nbsp;{{attendance}}
       </td>
+      <td>{{pushup1}}</td>
+      <td>{{situp1}}</td>
+      <td>{{mile mile1}}</td>
+      <td>{{pushup2}}</td>
+      <td>{{situp2}}</td>
+      <td>{{mile mile2}}</td>
     </tr>
     {{/each}}
     </tbody>

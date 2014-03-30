@@ -53,7 +53,7 @@ module.exports = function(app) {
                 function(done) { store.getTourCampers(tourId, sort, done); },
             ],
             function(err, results) {
-                var i, len, tour, campers, title, week, rollcall;
+                var i, len, tour, campers, title, week;
 
                 if (results) {
                     tour    = results[0];
@@ -120,6 +120,39 @@ module.exports = function(app) {
             }
         });
     });
+
+    /*
+     * URL: /tours/55/activity
+     */
+    app.get('/tours/:tour_id([0-9]{1,6})/activity', function(req, res, next) {
+        var tourId = req.params.tour_id;
+
+        res.render('activity', {
+            title:    sprintf('Tour %s: Activity', tourId),
+            login:    req.user,
+            tourId:   tourId,
+            tabTours: true
+        });
+    });
+
+
+
+    /*
+     * URL: /tours/55/payments
+     */
+    app.get('/tours/:tour_id([0-9]{1,6})/payments', function(req, res, next) {
+        var tourId = req.params.tour_id;
+
+        res.render('payments', {
+            title:    sprintf('Tour %s: Payments', tourId),
+            login:    req.user,
+            tourId:   tourId,
+            tabTours: true
+        });
+    });
+
+
+
 
     app.get('/tours/add', function(req, res, next) {
         res.render('addtour', {
