@@ -124,3 +124,27 @@ exports.getRollcall = function(tourId, cb) {
         }
     });
 };
+
+exports.getUser = function(userId, cb) {
+    connection.query(sql.getUser, [userId], function(err, rows) {
+        if (err) {
+            handleDisconnect();
+            console.error(err);
+            cb(err, null);
+        } else {
+            cb(null, rows[0]);
+        }
+    });
+};
+
+exports.getCampsAttended = function(userId, cb) {
+    connection.query(sql.getCampsAttended, [userId], function(err, rows) {
+        if (err) {
+            handleDisconnect();
+            console.error(err);
+            cb(err, null);
+        } else {
+            cb(null, rows);
+        }
+    });
+};

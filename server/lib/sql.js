@@ -94,3 +94,33 @@ exports.getCampers = multiline(function() {/*
     WHERE
         firstName like CONCAT(?, '%')
 */});
+
+exports.getCampsAttended = multiline(function() {/*
+    SELECT
+        id,
+        tour_id
+    FROM
+        camp
+    WHERE
+        user_id = ?
+    ORDER BY
+        tour_id ASC
+*/});
+
+exports.getCamp = multiline(function() {/*
+    SELECT
+        *
+    FROM
+        camp
+    WHERE
+        id = ?
+*/});
+
+exports.getUser = multiline(function() {/*
+    SELECT
+        *
+    FROM
+        user
+    WHERE
+        id = ?
+*/});

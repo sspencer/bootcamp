@@ -29,7 +29,7 @@ module.exports = function(app) {
     app.get('/login', function(req, res){
         res.render('', {
             layout:  'signin',
-            user:    req.user,
+            login:   req.user,
             message: req.flash('error')
         });
     });

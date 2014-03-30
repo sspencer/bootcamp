@@ -5,9 +5,6 @@ var store   = require('../lib/store'),
     lo      = require('lodash'),
     async   = require('async');
 
-function randomInt(minimum, maximum) {
-     return Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
-}
 
 function isPerfect(r, week) {
     var i,perfect = true;
@@ -36,7 +33,7 @@ module.exports = function(app) {
             if (results) {
                 res.render('tours', {
                     title:    'Tours',
-                    user:     req.user,
+                    login:     req.user,
                     tours:    results,
                     tabTours: true});
             }
@@ -84,7 +81,7 @@ module.exports = function(app) {
 
                     res.render('tour', {
                         title:    title,
-                        user:     req.user,
+                        login:    req.user,
                         baseUrl:  '/tours/' + tourId,
                         query:    req.query,
                         tourId:   tourId,
@@ -114,7 +111,7 @@ module.exports = function(app) {
 
                 res.render('rollcall', {
                     title:    sprintf('Tour %s: Rollcall', tourId),
-                    user:     req.user,
+                    login:    req.user,
                     tourId:   tourId,
                     campers:  results,
                     week:     week,
@@ -126,8 +123,8 @@ module.exports = function(app) {
 
     app.get('/tours/add', function(req, res, next) {
         res.render('addtour', {
-            title: 'Add Tour',
-            user:  req.user,
+            title:    'Add Tour',
+            login:    req.user,
             tabTours: true
         });
     });

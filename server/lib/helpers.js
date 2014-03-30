@@ -48,6 +48,39 @@ exports.alphaPager = function(selectedLetter) {
     return html.join('');
 };
 
+exports.campsPager = function(tours) {
+    var maxTour = 55; // TBD dynamic
+    var i, html = [], ul1, ul2, map = {};
+
+    tours.forEach(function(obj) {
+        map[String(obj.tour_id)] = String(obj.id);
+    });
+
+
+    ul1 = '<tr><td><ul style="margin:1px 0;padding:0" class="pagination pagination-805">';
+    ul2 = '<br></ul></td></tr>';
+    html.push('<table>');
+    html.push(ul1);
+
+    for (i = 1; i <= maxTour; i++) {
+        if (map[String(i)]) {
+            html.push('<li class="active"><a href="?camp=' + map[String(i)] + '">' + i + '</a></li>');
+        } else {
+            html.push('<li><span>' + i + '</span></li>');
+        }
+
+        if (i % 10 === 0) {
+            html.push(ul2);
+            html.push(ul1);
+        }
+    }
+
+    html.push(ul2);
+    html.push('</table>');
+
+    return html.join('');
+};
+
 exports.weekTabs = function(selectedWeek) {
     var i, html = [];
     selectedWeek = lo.parseInt(selectedWeek);
