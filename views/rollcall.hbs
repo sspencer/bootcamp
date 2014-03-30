@@ -5,11 +5,13 @@
   <li class="active">Rollcall</li>
 </ol>
 
-<div class="page-header">
-  <h1><span class="glyphicon glyphicon-bullhorn"></span> Tour {{tourId}}: Rollcall</h1>
-</div>
-
 <div class="container">
+
+	<div class="page-header">
+	  <h1><span class="glyphicon glyphicon-bullhorn"></span> Tour {{tourId}}: Rollcall</h1>
+	</div>
+
+
 
   <p class="help-block">Rollcall is respresented as 7 numbers, one for each day from Monday - Sunday.  Enter the numbers (0 - 3) for the number of times the camper appeared in camp that day. Saturday and Sunday are for extra credit.</p>
   <br>
@@ -18,19 +20,24 @@
 
 	<p>&nbsp;</p>
 
-
-	<form class="form-horizontal" role="form" method="post">
-		{{#each campers}}
+	<form class="form-horizontal well" role="form" method="post">
 		<input type="hidden" name="tour_id" value="{{../tourId}}">
 		<input type="hidden" name="week" value="{{../week}}">
+		{{#each campers}}
 	  <div class="form-group">
-	    <label for="rollcall_{{id}}" class="col-sm-4 control-label">{{firstName}} {{lastName}}</label>
+		    <label for="rollcall_{{id}}" class="col-sm-4 control-label">{{firstName}} {{lastName}}</label>
 	    <div class="col-sm-2">
 	      <input type="text" class="form-control" id="rollcall_{{id}}" value="{{rollcall}}">
 	    </div>
 	  </div>
 		{{/each}}
-		<button type="submit" class="btn btn-primary">Submit</button>
+	  <div class="form-group">
+	    <div class="col-sm-4">&nbsp;</div>
+	    <div class="col-sm-2">
+				<button type="submit" class="btn btn-primary">Save Rollcall</button>
+			</div>
+		</div>
 	</form>
+
 </div>
 

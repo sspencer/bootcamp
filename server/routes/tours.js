@@ -97,28 +97,43 @@ module.exports = function(app) {
      */
     app.get('/tours/:tour_id([0-9]{1,6})/rollcall', function(req, res, next) {
         var tourId = req.params.tour_id,
-            week   = lo.parseInt(req.query.week) || 1;
+            week   = lo.parseInt(req.query.week) || 0,
+            now = new Date().getTime();
 
-        week = Math.max(week, 1);
-        week = Math.min(week, 6);
+        async.parallel([
+                function(done) { store.getTour(tourId, done); },
+                function(done) { store.getRollcall(tourId, done); }
+            ],
+            function(err, results) {
+                var tour, campers;
 
-        store.getRollcall(tourId, function(err, results) {
-            if (results) {
-                var i, len = results.length;
-                for (i = 0; i < len; i++) {
-                    results[i].rollcall = results[i].rollcall.substr((week-1)*7, 7);
+                if (results) {
+                    tour = results[0];
+                    campers = results[1];
+
+                    if (week === 0 && now >= tour.startDate.getTime() && now <= tour.endDate.getTime()) {
+                        week = Math.ceil((now - tour.startDate.getTime()) / (7*24*3600*1000));
+                    }
+
+                    week = Math.max(week, 1);
+                    week = Math.min(week, 6);
+
+                    var i, len = campers.length;
+                    for (i = 0; i < len; i++) {
+                        campers[i].rollcall = campers[i].rollcall.substr((week-1)*7, 7);
+                    }
+
+                    res.render('rollcall', {
+                        title:    sprintf('Tour %s: Rollcall', tourId),
+                        login:    req.user,
+                        tourId:   tourId,
+                        campers:  campers,
+                        week:     week,
+                        tabTours: true
+                    });
                 }
-
-                res.render('rollcall', {
-                    title:    sprintf('Tour %s: Rollcall', tourId),
-                    login:    req.user,
-                    tourId:   tourId,
-                    campers:  results,
-                    week:     week,
-                    tabTours: true
-                });
             }
-        });
+        );
     });
 
     /*
