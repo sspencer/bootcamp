@@ -139,14 +139,26 @@ module.exports = function(app) {
     /*
      * URL: /tours/55/activity
      */
-    app.get('/tours/:tour_id([0-9]{1,6})/activity', function(req, res, next) {
+    app.get('/tours/:tour_id([0-9]{1,6})/stats', function(req, res, next) {
         var tourId = req.params.tour_id;
 
-        res.render('activity', {
-            title:    sprintf('Tour %s: Activity', tourId),
-            login:    req.user,
-            tourId:   tourId,
-            tabTours: true
+        store.getTourCampers(tourId, 'name', function(err, results) {
+            var campers, stats1;
+
+            stats1 = (lo.parseInt(req.query.stats) || 1) === 1;
+
+            if (results) {
+                campers = results;
+
+                res.render('camperstats', {
+                    title:    sprintf('Tour %s: Stats', tourId),
+                    login:    req.user,
+                    tourId:   tourId,
+                    campers:  campers,
+                    stats1:   stats1,
+                    tabTours: true
+                });
+            }
         });
     });
 

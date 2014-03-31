@@ -3,42 +3,41 @@
   <li class="active">Campers</li>
 </ol>
 
-<div class="page-header">
-  <h1>Campers <small>by first name: {{upper selectedLetter}}</small></h1>
-</div>
-
 <div class="container">
-{{{alphaPager selectedLetter}}}
-</div>
+  <div class="page-header">
+    <h1>Campers <small>by first name: {{upper selectedLetter}}</small></h1>
+  </div>
 
+  {{{alphaPager selectedLetter}}}
 
-<div class="table-responsive">
-  <table class="table table-striped">
-    <thead>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>{{{sort baseUrl query 'ID' 'id'}}}</th>
+          <th>{{{sort baseUrl query 'Name' 'name'}}}</th>
+          <th>{{{sort baseUrl query 'Year Started' 'yearStarted'}}}</th>
+          <th>{{{sort baseUrl query 'Last Tour' 'current_tour_id'}}}</th>
+          <th>{{{sort baseUrl query '# Camps' 'camps'}}}</th>
+          <th>{{{sort baseUrl query 'Occupation' 'occupation'}}}</th>
+        </tr>
+      </thead>
+      <tbody>
+      {{#each campers}}
       <tr>
-        <th>{{{sort baseUrl query 'ID' 'id'}}}</th>
-        <th>{{{sort baseUrl query 'Name' 'name'}}}</th>
-        <th>{{{sort baseUrl query 'Year Started' 'yearStarted'}}}</th>
-        <th>{{{sort baseUrl query 'Last Tour' 'current_tour_id'}}}</th>
-        <th>{{{sort baseUrl query '# Camps' 'camps'}}}</th>
-        <th>{{{sort baseUrl query 'Occupation' 'occupation'}}}</th>
+        <td>{{ id }}</td>
+        <td><a href="/campers/{{ id }}">{{ firstName }} {{ lastName }}</a></td>
+        <td>{{ yearStarted }}</td>
+        <td>{{ current_tour_id }}</td>
+        <td>{{ camps }}</td>
+        <td>{{ occupation }}</td>
       </tr>
-    </thead>
-    <tbody>
-    {{#each campers}}
-    <tr>
-      <td>{{ id }}</td>
-      <td><a href="/campers/{{ id }}">{{ firstName }} {{ lastName }}</a></td>
-      <td>{{ yearStarted }}</td>
-      <td>{{ current_tour_id }}</td>
-      <td>{{ camps }}</td>
-      <td>{{ occupation }}</td>
-    </tr>
-    {{else}}
-    <tr>
-    <td colspan=6><h4>No campers with that name!</h4></td>
-    </tr>
-    {{/each}}
-    </tbody>
-  </table>
+      {{else}}
+      <tr>
+      <td colspan=6><h4>No campers with that name!</h4></td>
+      </tr>
+      {{/each}}
+      </tbody>
+    </table>
+  </div>
 </div>

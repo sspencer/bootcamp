@@ -3,33 +3,36 @@
   <li class="active">Tours</li>
 </ol>
 
-<div class="page-header">
-  <h1>Tours</h1>
-</div>
+<div class="container">
 
-<div>
-  <p><a href="/tours/add" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-plus"></span> Add Tour</a></p>
-</div>
+  <div class="page-header">
+    <h1>Tours</h1>
+  </div>
 
-<div class="table-responsive">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Tour</th>
-        <th>Start</th>
-        <th>End</th>
-        <th>Campers</th>
-      </tr>
-    </thead>
-    <tbody>
-      {{#each tours}}
-      <tr>
-        <td><a href="/tours/{{id}}">{{id}}</a></td>
-        <td>{{fmtDate startDate}}</td>
-        <td>{{fmtDate endDate}}</td>
-        <td>{{numCampers}}</td>
-      </tr>
-      {{/each}}
-    </tbody>
-  </table>
+  <div>
+    <p><a href="/tours/add" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-plus"></span> Add Tour</a></p>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Tour</th>
+          <th>Start</th>
+          <th>End</th>
+          <th>Campers</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each tours}}
+        <tr>
+          <td><a href="/tours/{{id}}">{{id}}</a></td>
+          <td>{{fmtDate startDate}}</td>
+          <td>{{fmtDate endDate}}</td>
+          <td>{{numCampers}}</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
 </div>
