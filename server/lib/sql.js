@@ -131,4 +131,14 @@ exports.selectUser = multiline(function() {/*
         id = ?
 */});
 
+exports.selectNextTourId = multiline(function() {/*
+    SELECT
+        AUTO_INCREMENT tourId
+    FROM
+        information_schema.tables
+    WHERE
+        table_name = 'tour'
+        AND
+        table_schema = DATABASE()
+*/});
 

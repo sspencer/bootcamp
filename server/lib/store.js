@@ -160,3 +160,16 @@ exports.getCampsAttended = function(userId, cb) {
         }
     });
 };
+
+exports.getNextTourId = function(cb) {
+    connection.query(sql.selectNextTourId, function(err, rows) {
+        if (err) {
+            handleDisconnect();
+            console.error(err);
+            cb(err, null);
+        } else {
+            cb(null, rows[0]);
+        }
+    });
+
+};
