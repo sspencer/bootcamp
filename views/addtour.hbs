@@ -6,8 +6,83 @@
 <div class="container">
 
 	<div class="page-header">
-	  <h1><span class="glyphicon glyphicon-plus"></span> Add Tour</h1>
+	  <h1><span class="glyphicon glyphicon-plus"></span> Add Tour #{{tourId}}</h1>
 	</div>
 
-	<p>Form with start and end dates...TBD</p>
+  <div class="alert alert-info">
+		<span class="glyphicon glyphicon-info-sign"></span> After creating the new Tour, you will be able to add campers on the next page.
+	</div>
+
+	<form class="form-horizontal" role="form">
+
+	  <div class="form-group">
+	    <label for="inputStartDate" class="col-sm-2 control-label">Start Date</label>
+	    <div class="col-sm-2 input-group">
+	      <input class="form-control" id="inputStartDate" value="{{startDate}}">
+	    </div>
+	  </div>
+
+	  <div class="form-group">
+	    <label for="inputEndDate" class="col-sm-2 control-label">End Date</label>
+	    <div class="col-sm-2 input-group">
+	      <input class="form-control" id="inputEndDate" value="{{endDate}}">
+	    </div>
+	  </div>
+
+	  <div class="form-group">
+	    <label for="inputFullPrice" class="col-sm-2 control-label">Full Price</label>
+	    <div class="col-sm-2 input-group">
+				<span class="input-group-addon">$</span>
+	      <input class="form-control" id="inputFullPrice" value="360">
+	    </div>
+	  </div>
+
+	  <div class="form-group">
+	    <label for="inputBasePrice" class="col-sm-2 control-label">Base Price</label>
+	    <div class="col-sm-2 input-group">
+				<span class="input-group-addon">$</span>
+	      <input class="form-control" id="inputBasePrice" value="250">
+	    </div>
+	  </div>
+
+	  <div class="form-group">
+	    <label for="inputBuffetPrice" class="col-sm-2 control-label">Buffet Price</label>
+	    <div class="col-sm-2 input-group">
+				<span class="input-group-addon">$</span>
+	      <input class="form-control" id="inputBuffetPrice" value="150">
+	    </div>
+	  </div>
+
+	  <div class="form-group">
+	    <label for="inputDailyPrice" class="col-sm-2 control-label">Daily Price</label>
+	    <div class="col-sm-2 input-group">
+				<span class="input-group-addon">$</span>
+	      <input class="form-control" id="inputDailyPrice" value="10">
+	    </div>
+	  </div>
+	  <!--
+	  <div class="form-group">
+	    <label for="inputDailyPrice" class="col-sm-2 control-label">&nbsp;</label>
+		  <h3>Returning Campers</h3>
+	  </div>
+
+	  [[ pound each campers ]]
+	  <div class="form-group">
+	    <label class="col-sm-2 control-label">&nbsp;</label>
+	    <label class"col-sm-5">
+	  	  <input type="checkbox" value="user_{{userid}}" checked>&nbsp;
+				{{ firstName }} {{ lastName }}
+		  </label>
+	  </div>
+	  [[ slash each ]] -->
+
+    <div class="form-group">
+      <div class="col-sm-2">&nbsp;</div>
+      <div class="col-sm-2">
+        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Create Tour {{tourId}}</button>
+      </div>
+    </div>
+
+  </form>
+
 </div>

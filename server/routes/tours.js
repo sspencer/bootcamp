@@ -15,8 +15,17 @@ function isPerfect(r, week) {
 }
 
 function attendance(r, week) {
+    var len;
+    console.log('WEEK: ' + week);
+    if (week >= 6) {
+        len = 40;
+    } else {
+        len = week * 7;
+    }
+
+    console.log(r);
     var i, count = 0;
-    for (i = 0; i < week*7; i++) {
+    for (i = 0; i < len; i++) {
         count += lo.parseInt(r[i]);
     }
 
@@ -56,35 +65,39 @@ module.exports = function(app) {
                 var i, len, tour, campers, title, week;
 
                 if (results) {
-                    tour    = results[0];
-                    campers = results[1];
-                    title   = 'Tour ' + tourId;
-                    len     = campers.length;
-                    week    = 0;
+                    tour              = results[0];
+                    campers           = results[1];
+                    tour.participants = campers.length;
+                    title             = 'Tour ' + tourId;
+                    len               = campers.length;
+                    week              = 0;
 
 
-                    if (now >= tour.startDate.getTime() && now <= tour.endDate.getTime()) {
+                    //if (now >= tour.startDate.getTime() && now <= tour.endDate.getTime()) {
                         week = Math.ceil((now - tour.startDate.getTime()) / (7*24*3600*1000));
-                    }
+                    //}
 
                     for (i = 0; i < len; i++) {
 
-                        if (week > 0 && (campers[i].workoutProgram === 'base' || campers[i].workoutProgram === 'full')) {
+                        if (week > 0 && week < 7 && (campers[i].workoutProgram === 'base' || campers[i].workoutProgram === 'full')) {
                             // In the CURRENT tour ... don't look at all of rollcall
                             campers[i].attendance = attendance(campers[i].rollcall, week);
                             campers[i].perfect     = isPerfect(campers[i].rollcall, week);
                         } else {
-                            campers[i].attendance = '-';
+                            campers[i].attendance = 'n/a';
                             campers[i].perfect = false;
                         }
                     }
 
+                    tour.open = (week < 8);
+
                     res.render('tour', {
                         title:    title,
                         login:    req.user,
+                        week:     week,
                         baseUrl:  '/tours/' + tourId,
                         query:    req.query,
-                        tourId:   tourId,
+                        tour:     tour,
                         campers:  campers,
                         tabTours: true});
                 }
@@ -182,10 +195,38 @@ module.exports = function(app) {
 
 
     app.get('/tours/add', function(req, res, next) {
-        res.render('addtour', {
-            title:    'Add Tour',
-            login:    req.user,
-            tabTours: true
+
+        var startDate, endDate;
+
+        store.getNextTourId(function(err, nextTour) {
+            var nextTourId = nextTour.tourId -1;
+
+            async.parallel([
+                    function(done) { store.getTour(nextTourId, done); },
+                    function(done) { store.getTourCampers(nextTourId, 'name', done); },
+                ],
+                function(err, results) {
+                    var d, campers, tour;
+                    if (results) {
+                        tour      = results[0];
+                        campers   = results[1];
+
+                        d = new Date(tour.startDate.getTime() + (7 * 7 * 24 * 3600 * 1000));
+                        startDate = sprintf('%04d-%02d-%02d', d.getFullYear(), d.getMonth()+1, d.getDate());
+                        d = new Date(tour.endDate.getTime() + (7 * 7 * 24 * 3600 * 1000));
+                        endDate = sprintf('%04d-%02d-%02d', d.getFullYear(), d.getMonth()+1, d.getDate());
+
+                        res.render('addtour', {
+                            title:     'Add Tour',
+                            tourId:    nextTour.tourId,
+                            startDate: startDate,
+                            endDate:   endDate,
+                            campers:   campers,
+                            login:     req.user,
+                            tabTours:  true
+                        });
+                    }
+            });
         });
     });
 
