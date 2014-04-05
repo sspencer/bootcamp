@@ -12,7 +12,7 @@ function multiline(fn)
     return fn.toString().match(/[^]*\/\*([^]*)\*\/\}$/)[1].trim();
 }
 
-exports.getTours = multiline(function() {/*
+exports.selectTours = multiline(function() {/*
     SELECT
         t.id,
         t.startDate,
@@ -31,7 +31,7 @@ exports.getTours = multiline(function() {/*
     DESC;
 */});
 
-exports.getTour = multiline(function() {/*
+exports.selectTour = multiline(function() {/*
     SELECT
         *
     FROM
@@ -40,7 +40,7 @@ exports.getTour = multiline(function() {/*
         id = ?
 */});
 
-exports.getTourCampers = multiline(function() {/*
+exports.selectTourCampers = multiline(function() {/*
     SELECT
         c.user_id,
         u.firstName,
@@ -64,7 +64,7 @@ exports.getTourCampers = multiline(function() {/*
         c.tour_id=?
 */});
 
-exports.getRollcall = multiline(function() {/*
+exports.selectRollcall = multiline(function() {/*
     SELECT
         c.id,
         c.user_id,
@@ -86,7 +86,7 @@ exports.getRollcall = multiline(function() {/*
     ASC;
 */});
 
-exports.getCampers = multiline(function() {/*
+exports.selectCampers = multiline(function() {/*
     SELECT
         id,
         firstName,
@@ -101,7 +101,7 @@ exports.getCampers = multiline(function() {/*
         firstName like CONCAT(?, '%')
 */});
 
-exports.getCampsAttended = multiline(function() {/*
+exports.selectCampsAttended = multiline(function() {/*
     SELECT
         id,
         tour_id
@@ -113,7 +113,7 @@ exports.getCampsAttended = multiline(function() {/*
         tour_id ASC
 */});
 
-exports.getCamp = multiline(function() {/*
+exports.selectCamp = multiline(function() {/*
     SELECT
         *
     FROM
@@ -122,7 +122,7 @@ exports.getCamp = multiline(function() {/*
         id = ?
 */});
 
-exports.getUser = multiline(function() {/*
+exports.selectUser = multiline(function() {/*
     SELECT
         *
     FROM
@@ -130,3 +130,5 @@ exports.getUser = multiline(function() {/*
     WHERE
         id = ?
 */});
+
+

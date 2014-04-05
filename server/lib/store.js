@@ -73,7 +73,7 @@ function handleDisconnect(connection) {
 }
 
 exports.getTours = function(cb) {
-    connection.query(sql.getTours, function(err, rows) {
+    connection.query(sql.selectTours, function(err, rows) {
         if (err) {
             handleDisconnect();
             console.error(err);
@@ -85,7 +85,7 @@ exports.getTours = function(cb) {
 };
 
 exports.getTour = function(tourId, cb) {
-    connection.query(sql.getTour, [tourId], function(err, rows) {
+    connection.query(sql.selectTour, [tourId], function(err, rows) {
         if (err) {
             handleDisconnect();
             console.error(err);
@@ -98,7 +98,7 @@ exports.getTour = function(tourId, cb) {
 
 exports.getTourCampers = function(tourId, sort, cb) {
     var sortOrder = TourSort[sort] || TourSort.name;
-    var stmt = sprintf('%s ORDER BY %s', sql.getTourCampers, sortOrder);
+    var stmt = sprintf('%s ORDER BY %s', sql.selectTourCampers, sortOrder);
     connection.query(stmt, [tourId], function(err, rows) {
         if (err) {
             handleDisconnect();
@@ -112,7 +112,7 @@ exports.getTourCampers = function(tourId, sort, cb) {
 
 exports.getCampers = function(selectedLetter, sort, cb) {
     var sortOrder = CampersSort[sort] || CampersSort.name;
-    var stmt = sprintf('%s ORDER BY %s', sql.getCampers, sortOrder);
+    var stmt = sprintf('%s ORDER BY %s', sql.selectCampers, sortOrder);
 
     connection.query(stmt, [selectedLetter], function(err, rows) {
         if (err) {
@@ -126,7 +126,7 @@ exports.getCampers = function(selectedLetter, sort, cb) {
 };
 
 exports.getRollcall = function(tourId, cb) {
-    connection.query(sql.getRollcall, [tourId], function(err, rows) {
+    connection.query(sql.selectRollcall, [tourId], function(err, rows) {
         if (err) {
             handleDisconnect();
             console.error(err);
@@ -138,7 +138,7 @@ exports.getRollcall = function(tourId, cb) {
 };
 
 exports.getUser = function(userId, cb) {
-    connection.query(sql.getUser, [userId], function(err, rows) {
+    connection.query(sql.selectUser, [userId], function(err, rows) {
         if (err) {
             handleDisconnect();
             console.error(err);
@@ -150,7 +150,7 @@ exports.getUser = function(userId, cb) {
 };
 
 exports.getCampsAttended = function(userId, cb) {
-    connection.query(sql.getCampsAttended, [userId], function(err, rows) {
+    connection.query(sql.selectCampsAttended, [userId], function(err, rows) {
         if (err) {
             handleDisconnect();
             console.error(err);
