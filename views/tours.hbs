@@ -19,7 +19,7 @@
           <th>Tour</th>
           <th>Start</th>
           <th>End</th>
-          <th>Campers</th>
+          <th><div align=right>Campers</div></th>
         </tr>
       </thead>
       <tbody>
@@ -28,7 +28,7 @@
           <td><a href="/tours/{{id}}">{{id}}</a></td>
           <td>{{fmtDate startDate}}</td>
           <td>{{fmtDate endDate}}</td>
-          <td>{{numCampers}}</td>
+          <td align=right>{{numCampers}}</td>
         </tr>
         {{/each}}
       </tbody>
