@@ -11,11 +11,7 @@ var passport      = require('passport'),
 
 function findByUserId(id, done) {
     redis.hgetall(keys.userAcct(id), function(err, account) {
-        if (account) {
-            done(null, account);
-        } else {
-            done(new Error('User ' + userId + ' does not exist'), null);
-        }
+        done(null, account);
     });
 }
 
