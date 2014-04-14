@@ -60,13 +60,13 @@
 	      <input class="form-control" id="inputDailyPrice" value="10">
 	    </div>
 	  </div>
-	  <!--
+
 	  <div class="form-group">
 	    <label for="inputDailyPrice" class="col-sm-2 control-label">&nbsp;</label>
 		  <h3>Returning Campers</h3>
 	  </div>
 
-	  [[ pound each campers ]]
+	  {{#each campers}}
 	  <div class="form-group">
 	    <label class="col-sm-2 control-label">&nbsp;</label>
 	    <label class"col-sm-5">
@@ -74,7 +74,7 @@
 				{{ firstName }} {{ lastName }}
 		  </label>
 	  </div>
-	  [[ slash each ]] -->
+	  {{/each}}
 
     <div class="form-group">
       <div class="col-sm-2">&nbsp;</div>
