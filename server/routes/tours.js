@@ -33,7 +33,6 @@ function attendance(r, week) {
 }
 
 function createTour(req) {
-
 }
 
 module.exports = function(app) {

@@ -96,6 +96,10 @@ exports.getTour = function(tourId, cb) {
     });
 };
 
+exports.insertTour = function(id, startDate, endDate, days, basePrice, buffetPrice, dailyPrice, fullPrice, cb) {
+
+};
+
 exports.getTourCampers = function(tourId, sort, cb) {
     var sortOrder = TourSort[sort] || TourSort.name;
     var stmt = sprintf('%s ORDER BY %s', sql.selectTourCampers, sortOrder);
