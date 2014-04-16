@@ -31,6 +31,21 @@ exports.selectTours = multiline(function() {/*
     DESC;
 */});
 
+exports.insertTour = multiline(function() {/*
+    INSERT INTO tour
+        (id, startDate, endDate, days, basePrice, buffetPrice, dailyPrice, fullPrice)
+    VALUES
+        (?, ?, ?, ?, ?, ?, ?, ?)
+*/});
+
+/* insert camp:
+    INSERT INTO camp
+        (tour_id, user_id)
+    VALUES
+        (56, 20),
+        (56, 484);
+*/
+
 exports.selectTour = multiline(function() {/*
     SELECT
         *
