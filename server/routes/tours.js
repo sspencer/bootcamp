@@ -230,4 +230,13 @@ module.exports = function(app) {
         });
     });
 
+    app.post('/tours/add', function(req, res, next) {
+
+        var body = JSON.stringify(req.body);
+        res.render('dbg', {
+            title:     'Debug Add Tour',
+            body: body
+        });
+    });
+
 };
