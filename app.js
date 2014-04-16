@@ -74,6 +74,7 @@ app.use(express.session({
     store:  new RedisStore({client: redis, prefix: 'sess:' }),
     cookie: { maxAge:null } // cookie: { maxAge:24*3600*1000 }
 }));
+app.use(express.csrf());
 
 
 userauth(app);

@@ -223,6 +223,7 @@ module.exports = function(app) {
                             endDate:   endDate,
                             campers:   campers,
                             login:     req.user,
+                            csrf:      req.csrfToken(),
                             tabTours:  true
                         });
                     }
