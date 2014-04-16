@@ -32,6 +32,10 @@ function attendance(r, week) {
     return sprintf('%d/%d', count, week*5);
 }
 
+function createTour(req) {
+
+}
+
 module.exports = function(app) {
 
     /*
