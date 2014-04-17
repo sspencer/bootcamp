@@ -1,7 +1,12 @@
 'use strict';
 
 var passport = require('passport'),
-    sprintf  = require('sprintf').sprintf;
+    sprintf  = require('sprintf').sprintf,
+    auth     = require('./auth'),
+    home     = require('./home'),
+    campers  = require('./campers'),
+    tours    = require('./tours');
+
 
 var LOGGED_IN = '/tours';
 
@@ -26,33 +31,28 @@ module.exports = function(app) {
     /*************************************************************************************
      * Login Pages
      *************************************************************************************/
-    app.get('/login', function(req, res){
-        res.render('', {
-            layout:  'signin',
-            login:   req.user,
-            message: req.flash('error')
-        });
-    });
-
+    app.get('/login', auth.login);
+    app.get('/logout', auth.logout);
     app.post('/login',
         passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
-        function(req, res) {
-            res.redirect(LOGGED_IN);
-        }
+        auth.postLogin(LOGGED_IN)
     );
-
-    app.get('/logout', function(req, res){
-        req.logout();
-        res.redirect('/');
-    });
-
 
     /*************************************************************************************
      * Actual Website
      *************************************************************************************/
-    require('./home')(app);
-    require('./campers')(app);
-    require('./tours')(app);
+
+    app.get('/', home.index);
+    app.get('/campers', campers.index);
+    app.get('/campers/:camper_id([0-9]{1,6})', campers.camper);
+
+    app.get('/tours', tours.index);
+    app.get('/tours/:tour_id([0-9]{1,6})', tours.tour);
+    app.get('/tours/:tour_id([0-9]{1,6})/rollcall', tours.rollcall);
+    app.get('/tours/:tour_id([0-9]{1,6})/stats', tours.stats);
+    app.get('/tours/:tour_id([0-9]{1,6})/payments', tours.payments);
+    app.get('/tours/add', tours.add);
+    app.post('/tours/add', tours.postAdd);
 
 
     /*************************************************************************************
@@ -60,28 +60,9 @@ module.exports = function(app) {
      *************************************************************************************/
 
     // 404 This is the last route and will catch everything not already served.
-    app.use(function (req, res, next) {
-        res.status(404).render('404', {
-            layout: 'error',
-            title:  'Page Not found',
-            url: req.url
-        });
-    });
+    app.use(home.error404);
 
-    // Display errors.
-    app.use(function(err, req, res, next) {
-        err.status = err.status || 500;
-
-        var title = sprintf('%d %s', err.status, err.message);
-
-        // Prevents stacktrace leakage by passing (error = {}) in production
-        res.status(err.status).render('50X', {
-            layout:  'error',
-            title:   title,
-            message: title,
-            error:   (app.get('env') === 'development' ? err : {})
-        });
-    });
-
+    // and this will handle the errors
+    app.use(home.error500(app.get('env') === 'development'));
 };
 

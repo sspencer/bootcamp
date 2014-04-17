@@ -91,7 +91,11 @@ exports.getTour = function(tourId, cb) {
             console.error(err);
             cb(err, null);
         } else {
-            cb(null, rows[0]);
+            if (rows.length === 0) {
+                cb(new Error("No such tour"), null);
+            } else {
+                cb(null, rows[0]);
+            }
         }
     });
 };
