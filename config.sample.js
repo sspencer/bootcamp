@@ -44,13 +44,15 @@ var environment = {
     development: {
         server: {
             session_secret: "some secret",
-            port:           3000
+            port:           3000,
+            cluster:        false
         }
     },
     production: {
         server: {
             session_secret: "some other secret",
-            port:           4000
+            port:           4000,
+            cluster:        true
         }
     }
 };
