@@ -179,5 +179,4 @@ exports.getNextTourId = function(cb) {
             cb(null, rows[0]);
         }
     });
-
 };

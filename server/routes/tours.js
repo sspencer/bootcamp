@@ -32,8 +32,18 @@ function attendance(r, week) {
     return sprintf('%d/%d', count, week*5);
 }
 
+function addUsersToTour(tourId) {
+    // add flag to camp "if never edited"
+    // add defaults to camp
+    // select user_id,workoutTime,workoutGroup,workoutProgram,source from camp where tour_id=<tour_id>-1
+    // insert into camp (id,workoutTime,workoutGroup,workoutProgram,source,"never edited") values (user_id1,...),(user_id2...)
+}
+
 function createTour(req) {
 }
+
+
+
 
 
 exports.index = function(req, res, next) {
@@ -189,38 +199,34 @@ exports.add = function(req, res, next) {
     store.getNextTourId(function(err, nextTour) {
         var nextTourId = nextTour.tourId -1;
 
-        async.parallel([
-                function(done) { store.getTour(nextTourId, done); },
-                function(done) { store.getTourCampers(nextTourId, 'name', done); },
-            ],
-            function(err, results) {
-                var d, campers, tour;
-                if (results) {
-                    tour    = results[0];
-                    campers = results[1];
+        store.getTour(nextTourId, function(err, tour) {
+            var d;
+            if (tour) {
+                d = new Date(tour.startDate.getTime() + (7 * 7 * 24 * 3600 * 1000));
+                startDate = sprintf('%04d-%02d-%02d', d.getFullYear(), d.getMonth()+1, d.getDate());
+                d = new Date(tour.endDate.getTime() + (7 * 7 * 24 * 3600 * 1000));
+                endDate = sprintf('%04d-%02d-%02d', d.getFullYear(), d.getMonth()+1, d.getDate());
 
-                    d = new Date(tour.startDate.getTime() + (7 * 7 * 24 * 3600 * 1000));
-                    startDate = sprintf('%04d-%02d-%02d', d.getFullYear(), d.getMonth()+1, d.getDate());
-                    d = new Date(tour.endDate.getTime() + (7 * 7 * 24 * 3600 * 1000));
-                    endDate = sprintf('%04d-%02d-%02d', d.getFullYear(), d.getMonth()+1, d.getDate());
-
-                    res.render('tours/add', {
-                        title:     'Add Tour',
-                        tourId:    nextTour.tourId,
-                        startDate: startDate,
-                        endDate:   endDate,
-                        campers:   campers,
-                        login:     req.user,
-                        csrf:      req.csrfToken(),
-                        tabTours:  true
-                    });
-                }
+                res.render('tours/add', {
+                    title:     'Add Tour',
+                    tourId:    nextTour.tourId,
+                    startDate: startDate,
+                    endDate:   endDate,
+                    login:     req.user,
+                    csrf:      req.csrfToken(),
+                    tabTours:  true
+                });
+            }
         });
     });
 };
 
 exports.postAdd = function(req, res, next) {
 
+    // result of insert if new tour id
+    // store.insertTour(params, function(err, newTourId) {
+    //     addUsersToTour
+    // })
     var body = JSON.stringify(req.body);
     res.render('home/dbg', {
         title: 'Debug Add Tour',
