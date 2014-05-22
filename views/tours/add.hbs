@@ -64,28 +64,16 @@
         </div>
       </div>
 
-      <div class="form-group">
-        <label for="inputDailyPrice" class="col-sm-2 control-label">&nbsp;</label>
-          <h3>Returning Campers</h3>
-      </div>
-
       {{#each campers}}
-      <div class="form-group">
-        <label class="col-sm-2 control-label">&nbsp;</label>
-        <label class"col-sm-5">
-          <input name="campers" type="checkbox" value="user_{{user_id}}" checked>&nbsp;
-                {{ firstName }} {{ lastName }}
-          </label>
-      </div>
+      <input type="hidden" name="campers" value="user_{{user_id}}">
       {{/each}}
+      <br>
 
-    <div class="form-group">
-      <div class="col-sm-2">&nbsp;</div>
-      <div class="col-sm-2">
-        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Create Tour {{tourId}}</button>
+      <div class="form-group">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-2">
+          <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Create Tour {{tourId}}</button>
+        </div>
       </div>
-    </div>
-
-  </form>
-
+    </form>
 </div>

@@ -196,8 +196,8 @@ exports.add = function(req, res, next) {
             function(err, results) {
                 var d, campers, tour;
                 if (results) {
-                    tour      = results[0];
-                    campers   = results[1];
+                    tour    = results[0];
+                    campers = results[1];
 
                     d = new Date(tour.startDate.getTime() + (7 * 7 * 24 * 3600 * 1000));
                     startDate = sprintf('%04d-%02d-%02d', d.getFullYear(), d.getMonth()+1, d.getDate());
@@ -223,7 +223,7 @@ exports.postAdd = function(req, res, next) {
 
     var body = JSON.stringify(req.body);
     res.render('home/dbg', {
-        title:     'Debug Add Tour',
-        body: body
+        title: 'Debug Add Tour',
+        body:  body
     });
 };
