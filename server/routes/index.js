@@ -52,7 +52,7 @@ module.exports = function(app) {
     app.get('/tours/:tour_id([0-9]{1,6})/stats', tours.stats);
     app.get('/tours/:tour_id([0-9]{1,6})/payments', tours.payments);
     app.get('/tours/add', tours.add);
-    app.post('/tours/add', tours.postAdd);
+    app.post('/tours/add', tours.addValidator, tours.postAdd);
 
 
     /*************************************************************************************

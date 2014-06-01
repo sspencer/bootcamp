@@ -3,8 +3,9 @@
 var store   = require('../lib/store'),
     sprintf = require('sprintf').sprintf,
     lo      = require('lodash'),
-    async   = require('async');
-
+    async   = require('async'),
+    form    = require('express-form').configure({autoTrim:true}),
+    field   = form.field;
 
 function isPerfect(r, week) {
     var i,perfect = true;
@@ -32,6 +33,34 @@ function attendance(r, week) {
     return sprintf('%d/%d', count, week*5);
 }
 
+function defaultAddTourValues()
+{
+    return {
+        startDate:   '',
+        endDate:     '',
+        tourId:      '0',
+        days:        '30',
+        fullPrice:   '400',
+        basePrice:   '300',
+        buffetPrice: '175',
+        dailyPrice:  '11',
+        dropinPrice: '20'
+    };
+}
+
+exports.addValidator = form(
+    field("startDate").required().is(/^20\d\d-\d\d-\d\d$/i),
+    field("endDate").required().is(/^20\d\d-\d\d-\d\d$/i),
+    field("tourId").required().isInt(), // hidden value
+    field("days").required().isInt(),
+    field("fullPrice").required().isInt(),
+    field("basePrice").required().isInt(),
+    field("buffetPrice").required().isInt(),
+    field("dailyPrice").required().isInt(),
+    field("dropinPrice").required().isInt());
+
+
+
 function addUsersToTour(tourId) {
     // add flag to camp "if never edited"
     // add defaults to camp
@@ -40,6 +69,13 @@ function addUsersToTour(tourId) {
 }
 
 function createTour(req) {
+    store.insertTour(req.startDate, req.endDate, req.days, req.basePrice, req.buffetPrice, req.dailyPrice, req.fullPrice, function(err, insertId) {
+        if (err) {
+
+        } else {
+
+        }
+    });
 }
 
 
@@ -200,18 +236,21 @@ exports.add = function(req, res, next) {
         var nextTourId = nextTour.tourId -1;
 
         store.getTour(nextTourId, function(err, tour) {
-            var d;
+            var d, obj;
             if (tour) {
                 d = new Date(tour.startDate.getTime() + (7 * 7 * 24 * 3600 * 1000));
                 startDate = sprintf('%04d-%02d-%02d', d.getFullYear(), d.getMonth()+1, d.getDate());
                 d = new Date(tour.endDate.getTime() + (7 * 7 * 24 * 3600 * 1000));
                 endDate = sprintf('%04d-%02d-%02d', d.getFullYear(), d.getMonth()+1, d.getDate());
 
+                obj           = defaultAddTourValues();
+                obj.tourId    = nextTour.tourId;
+                obj.startDate = startDate;
+                obj.endDate   = endDate;
+
                 res.render('tours/add', {
                     title:     'Add Tour',
-                    tourId:    nextTour.tourId,
-                    startDate: startDate,
-                    endDate:   endDate,
+                    obj:       obj,
                     login:     req.user,
                     csrf:      req.csrfToken(),
                     tabTours:  true
@@ -227,9 +266,27 @@ exports.postAdd = function(req, res, next) {
     // store.insertTour(params, function(err, newTourId) {
     //     addUsersToTour
     // })
-    var body = JSON.stringify(req.body);
-    res.render('home/dbg', {
-        title: 'Debug Add Tour',
-        body:  body
-    });
+
+    //
+    if (req.form.isValid) {
+        var body = JSON.stringify(req.body);
+        res.render('home/dbg', {
+            title: 'Debug Add Tour',
+            body:  body
+        });
+
+    } else {
+
+        res.render('tours/add', {
+            title:    'Error Add Tour',
+            obj:      req.form,
+            err:      req.form.getErrors(),
+            flash:    req.flash('error'),
+            login:    req.user,
+            csrf:     req.csrfToken(),
+            tabTours: true
+
+        });
+    }
+
 };

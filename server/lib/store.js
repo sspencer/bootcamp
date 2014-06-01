@@ -100,8 +100,16 @@ exports.getTour = function(tourId, cb) {
     });
 };
 
-exports.insertTour = function(id, startDate, endDate, days, basePrice, buffetPrice, dailyPrice, fullPrice, cb) {
-
+exports.insertTour = function(startDate, endDate, days, basePrice, buffetPrice, dailyPrice, fullPrice, cb) {
+    connection.query(sql.insertTour, [0, startDate, endDate, days, basePrice, buffetPrice, dailyPrice, fullPrice], function(err, result) {
+        if (err) {
+            handleDisconnect();
+            console.error(err);
+            cb(err, null);
+        } else {
+            cb(null, result.insertId);
+        }
+    });
 };
 
 exports.getTourCampers = function(tourId, sort, cb) {

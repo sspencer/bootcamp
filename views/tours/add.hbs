@@ -5,70 +5,92 @@
 
 <div class="container">
 
-    <div class="page-header">
-      <h1><span class="glyphicon glyphicon-plus"></span> Add Tour #{{tourId}}</h1>
-    </div>
+  <div class="page-header">
+    <h1><span class="glyphicon glyphicon-plus"></span> Add Tour #{{obj.tourId}}</h1>
+  </div>
 
+  {{#if flash}}
+  <div class="alert alert-danger"><strong>Error!</strong> Please correct the form and try again.</div>
+  {{else}}
   <div class="alert alert-info">
-        <span class="glyphicon glyphicon-info-sign"></span> Creating a tour automatically adds all campers from the current bootcamp to the next.
-    </div>
+    <span class="glyphicon glyphicon-info-sign"></span> Creating a tour automatically adds all campers from the current bootcamp to the next.
+  </div>
+  {{/if}}
 
-
-    <form class="form-horizontal" role="form" method="post">
+  <form class="form-horizontal" role="form" method="post">
 
       <input type="hidden" name="_csrf" value="{{csrf}}">
+      <input type="hidden" name="tourId" value="{{obj.tourId}}">
 
-      <div class="form-group">
+      <div class="form-group {{#if err.startDate}}has-error{{/if}}">
         <label for="inputStartDate" class="col-sm-2 control-label">Start Date</label>
-        <div class="col-sm-2 input-group">
-          <input name="startDate" class="form-control" id="inputStartDate" value="{{startDate}}">
+        <div class="col-sm-4 input-group">
+          <input name="startDate" class="form-control" id="inputStartDate" value="{{obj.startDate}}">
+		      {{#if err.startDate}}<span class="help-block">Valid date is YYYY-MM-DD</span>{{/if}}
         </div>
       </div>
 
-      <div class="form-group">
+      <div class="form-group {{#if err.endDate}}has-error{{/if}}">
         <label for="inputEndDate" class="col-sm-2 control-label">End Date</label>
-        <div class="col-sm-2 input-group">
-          <input name="endDate" class="form-control" id="inputEndDate" value="{{endDate}}">
+        <div class="col-sm-4 input-group">
+          <input name="endDate" class="form-control" id="inputEndDate" value="{{obj.endDate}}">
+		      {{#if err.endDate}}<span class="help-block">Valid date is YYYY-MM-DD</span>{{/if}}
         </div>
       </div>
 
-      <div class="form-group">
+      <div class="form-group {{#if err.days}}has-error{{/if}}">
+        <label for="inputDays" class="col-sm-2 control-label" >Days in Tour</label>
+        <div class="col-sm-4 input-group">
+          <input name="days" class="form-control" id="inputDays" value="{{obj.days}}">
+		      {{#if err.days}}<span class="help-block">Must be integer value</span>{{/if}}
+        </div>
+      </div>
+
+      <div class="form-group {{#if err.fullPrice}}has-error{{/if}}">
         <label for="inputFullPrice" class="col-sm-2 control-label">Full Price</label>
-        <div class="col-sm-2 input-group">
-          <span class="input-group-addon">$</span>
-          <input name="fullPrice" class="form-control" id="inputFullPrice" value="360">
+        <div class="col-sm-4 input-group">
+          <input name="fullPrice" class="form-control" id="inputFullPrice" value="{{obj.fullPrice}}">
         </div>
+		      {{#if err.fullPrice}}<span class="help-block">Must be integer value</span>{{/if}}
       </div>
 
-      <div class="form-group">
+      <div class="form-group {{#if err.basePrice}}has-error{{/if}}">
         <label for="inputBasePrice" class="col-sm-2 control-label">Base Price</label>
-        <div class="col-sm-2 input-group">
-          <span class="input-group-addon">$</span>
-          <input name="basePrice" class="form-control" id="inputBasePrice" value="250">
+        <div class="col-sm-4 input-group">
+          <input name="basePrice" class="form-control" id="inputBasePrice" value="{{obj.basePrice}}">
+		      {{#if err.basePrice}}<span class="help-block">Must be integer value</span>{{/if}}
         </div>
       </div>
 
-      <div class="form-group">
+      <div class="form-group {{#if err.buffetPrice}}has-error{{/if}}">
         <label for="inputBuffetPrice" class="col-sm-2 control-label">Buffet Price</label>
-        <div class="col-sm-2 input-group">
-          <span class="input-group-addon">$</span>
-          <input name="buffetPrice" class="form-control" id="inputBuffetPrice" value="150">
+        <div class="col-sm-4 input-group">
+          <input name="buffetPrice" class="form-control" id="inputBuffetPrice" value="{{obj.buffetPrice}}">
+		      {{#if err.buffetPrice}}<span class="help-block">Must be integer value</span>{{/if}}
         </div>
       </div>
 
-      <div class="form-group">
+      <div class="form-group {{#if err.dailyPrice}}has-error{{/if}}">
         <label for="inputDailyPrice" class="col-sm-2 control-label">Daily Price</label>
-        <div class="col-sm-2 input-group">
-           <span class="input-group-addon">$</span>
-           <input name="dailyPrice" class="form-control" id="inputDailyPrice" value="10">
+        <div class="col-sm-4 input-group">
+          <input name="dailyPrice" class="form-control" id="inputDailyPrice" value="{{obj.dailyPrice}}">
+		      {{#if err.dailyPrice}}<span class="help-block">Must be integer value</span>{{/if}}
+        </div>
+      </div>
+
+      <div class="form-group {{#if err.dropinPrice}}has-error{{/if}}">
+        <label for="inputDropinPrice" class="col-sm-2 control-label">Drop In Price</label>
+        <div class="col-sm-4 input-group">
+          <input name="dropinPrice" class="form-control" id="inputDropinPrice" value="{{obj.dropinPrice}}">
+		      {{#if err.dadropinPriceys}}<span class="help-block">Must be integer value</span>{{/if}}
         </div>
       </div>
 
       <br>
 
       <div class="form-group">
-        <div class="col-sm-3"></div>
-        <div class="col-sm-2">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-4">
           <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Create Tour {{tourId}}</button>
         </div>
       </div>
