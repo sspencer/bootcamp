@@ -116,34 +116,44 @@ exports.tour = function(req, res, next) {
                 len               = campers.length;
                 week              = 0;
 
+                if (len === 0) {
+                    res.render('tours/newempty', {
+                        title:    title,
+                        login:    req.user,
+                        tour:     tour,
+                        tabTours: true
+                    });
+                } else {
 
-                //if (now >= tour.startDate.getTime() && now <= tour.endDate.getTime()) {
+
+                    //if (now >= tour.startDate.getTime() && now <= tour.endDate.getTime()) {
                     week = Math.ceil((now - tour.startDate.getTime()) / (7*24*3600*1000));
-                //}
+                    //}
 
-                for (i = 0; i < len; i++) {
+                    for (i = 0; i < len; i++) {
 
-                    if (week > 0 && week < 7 && (campers[i].workoutProgram === 'base' || campers[i].workoutProgram === 'full')) {
-                        // In the CURRENT tour ... don't look at all of rollcall
-                        campers[i].attendance = attendance(campers[i].rollcall, week);
-                        campers[i].perfect     = isPerfect(campers[i].rollcall, week);
-                    } else {
-                        campers[i].attendance = 'n/a';
-                        campers[i].perfect = false;
+                        if (week > 0 && week < 7 && (campers[i].workoutProgram === 'base' || campers[i].workoutProgram === 'full')) {
+                            // In the CURRENT tour ... don't look at all of rollcall
+                            campers[i].attendance = attendance(campers[i].rollcall, week);
+                            campers[i].perfect     = isPerfect(campers[i].rollcall, week);
+                        } else {
+                            campers[i].attendance = 'n/a';
+                            campers[i].perfect = false;
+                        }
                     }
+
+                    tour.open = (week < 8);
+
+                    res.render('tours/tour', {
+                        title:    title,
+                        login:    req.user,
+                        week:     week,
+                        baseUrl:  '/tours/' + tourId,
+                        query:    req.query,
+                        tour:     tour,
+                        campers:  campers,
+                        tabTours: true});
                 }
-
-                tour.open = (week < 8);
-
-                res.render('tours/tour', {
-                    title:    title,
-                    login:    req.user,
-                    week:     week,
-                    baseUrl:  '/tours/' + tourId,
-                    query:    req.query,
-                    tour:     tour,
-                    campers:  campers,
-                    tabTours: true});
             }
         }
     );
@@ -279,6 +289,7 @@ exports.postAdd = function(req, res, next) {
             obj.dropinPrice,
             function(err, result){
                 if (err) {
+                    // TBD  --- just call next(err) ?????
                     res.render('tours/add', {
                         title:   'Error: Add Tour',
                         message: 'The system experienced an error trying to add the new tour.',
