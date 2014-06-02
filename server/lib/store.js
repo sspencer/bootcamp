@@ -100,14 +100,15 @@ exports.getTour = function(tourId, cb) {
     });
 };
 
-exports.insertTour = function(startDate, endDate, days, basePrice, buffetPrice, dailyPrice, fullPrice, cb) {
-    connection.query(sql.insertTour, [0, startDate, endDate, days, basePrice, buffetPrice, dailyPrice, fullPrice], function(err, result) {
+exports.insertTour = function(startDate, endDate, days, basePrice, buffetPrice, dailyPrice, fullPrice, dropinPrice, cb) {
+    var params = [0, startDate, endDate, days, basePrice, buffetPrice, dailyPrice, fullPrice, dropinPrice];
+    connection.query(sql.insertTour, params, function(err, result) {
         if (err) {
             handleDisconnect();
             console.error(err);
             cb(err, null);
         } else {
-            cb(null, result.insertId);
+            cb(null, { tourId: result.insertId});
         }
     });
 };

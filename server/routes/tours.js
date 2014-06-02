@@ -261,7 +261,7 @@ exports.add = function(req, res, next) {
 };
 
 exports.postAdd = function(req, res, next) {
-
+    var obj = req.form;
     // result of insert if new tour id
     // store.insertTour(params, function(err, newTourId) {
     //     addUsersToTour
@@ -269,16 +269,39 @@ exports.postAdd = function(req, res, next) {
 
     //
     if (req.form.isValid) {
+        store.insertTour(obj.startDate,
+            obj.endDate,
+            obj.days,
+            obj.basePrice,
+            obj.buffetPrice,
+            obj.dailyPrice,
+            obj.fullPrice,
+            obj.dropinPrice,
+            function(err, result){
+                if (err) {
+                    res.render('tours/add', {
+                        title:   'Error: Add Tour',
+                        message: 'The system experienced an error trying to add the new tour.',
+                        tabTours: true,
+                        login: req.user
+                    });
+                } else {
+                    res.redirect('/tours/' + result.tourId);
+                }
+            });
+
+        /*
         var body = JSON.stringify(req.body);
         res.render('home/dbg', {
             title: 'Debug Add Tour',
             body:  body
         });
+        */
 
     } else {
 
         res.render('tours/add', {
-            title:    'Error Add Tour',
+            title:    'Error: Add Tour',
             obj:      req.form,
             err:      req.form.getErrors(),
             flash:    req.flash('error'),

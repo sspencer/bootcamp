@@ -33,9 +33,9 @@ exports.selectTours = multiline(function() {/*
 
 exports.insertTour = multiline(function() {/*
     INSERT INTO tour
-        (id, startDate, endDate, days, basePrice, buffetPrice, dailyPrice, fullPrice)
+        (id, startDate, endDate, days, basePrice, buffetPrice, dailyPrice, fullPrice, dropinPrice)
     VALUES
-        (?, ?, ?, ?, ?, ?, ?, ?)
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
 */});
 
 /* insert camp:
