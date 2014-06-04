@@ -53,6 +53,7 @@ module.exports = function(app) {
     app.get('/tours/:tour_id([0-9]{1,6})/payments', tours.payments);
     app.get('/tours/add', tours.add);
     app.post('/tours/add', tours.addValidator, tours.postAdd);
+    app.get('/tours/add2/:tour_id([0-9]{1,6})', tours.add2); // TBD - this should be post-postAdd
 
 
     /*************************************************************************************

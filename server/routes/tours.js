@@ -324,3 +324,28 @@ exports.postAdd = function(req, res, next) {
     }
 
 };
+
+exports.add2 = function(req, res, next) {
+
+    var tourId = req.params.tour_id;
+
+    if (tourId > 1) {
+        store.getTourCampers(tourId - 1, 'name', function(err, results) {
+
+            var obj;
+
+            obj        = {};
+            obj.tourId = tourId;
+
+            res.render('tours/add2', {
+                title:    'Add Tour 2/2',
+                obj:      obj,
+                login:    req.user,
+                csrf:     req.csrfToken(),
+                campers:  results,
+                tabTours: true
+            });
+        });
+    }
+};
+
