@@ -101,6 +101,7 @@ exports.selectRollcall = multiline(function() {/*
     ASC;
 */});
 
+
 exports.selectCampers = multiline(function() {/*
     SELECT
         id,
@@ -135,6 +136,15 @@ exports.selectCamp = multiline(function() {/*
         camp
     WHERE
         id = ?
+*/});
+
+exports.selectCopyCampInfo = multiline(function() {/*
+    SELECT
+        *
+    FROM
+        camp
+    WHERE
+        tour_id = ?
 */});
 
 exports.selectUser = multiline(function() {/*

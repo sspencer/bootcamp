@@ -94,6 +94,21 @@ exports.index = function(req, res, next) {
     });
 };
 
+exports.copy = function(req, res, next) {
+    store.copyCampers(55, 56, function(err, result) {
+        if (err) {
+            next(err);
+        } else {
+            res.render('home/dbg', {
+                title:    'TEST TOUR COPY',
+                login:    req.user,
+                body:     JSON.stringify(result.rows),
+                tabTours: true});
+        }
+    });
+};
+
+
 exports.tour = function(req, res, next) {
     var tourId = req.params.tour_id;
     var sort = req.query.sort || 'name';

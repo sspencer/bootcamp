@@ -100,6 +100,19 @@ exports.getTour = function(tourId, cb) {
     });
 };
 
+exports.copyCampers = function(srcTour, dstTour, cb)
+{
+    connection.query(sql.selectCopyCampInfo, [srcTour], function(err, rows) {
+        if (err) {
+            handleDisconnect();
+            console.error(err);
+            cb(err, null);
+        } else {
+            cb(null, { rows:rows, tourId: dstTour });
+        }
+    });
+};
+
 exports.insertTour = function(startDate, endDate, days, basePrice, buffetPrice, dailyPrice, fullPrice, dropinPrice, cb) {
     var params = [0, startDate, endDate, days, basePrice, buffetPrice, dailyPrice, fullPrice, dropinPrice];
     connection.query(sql.insertTour, params, function(err, result) {
@@ -108,7 +121,7 @@ exports.insertTour = function(startDate, endDate, days, basePrice, buffetPrice, 
             console.error(err);
             cb(err, null);
         } else {
-            cb(null, { tourId: result.insertId});
+//            copyCampers(result.insertId - 1, result.insertId);
         }
     });
 };
