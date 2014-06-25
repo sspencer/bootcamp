@@ -103,12 +103,28 @@ exports.getTour = function(tourId, cb) {
 exports.copyCampers = function(srcTour, dstTour, cb)
 {
     connection.query(sql.selectCopyCampInfo, [srcTour], function(err, rows) {
+        var copySQL = "";
+        var values = [];
         if (err) {
             handleDisconnect();
             console.error(err);
             cb(err, null);
         } else {
-            cb(null, { rows:rows, tourId: dstTour });
+             // (tour_id, user_id, workoutTime, workoutGroup, workoutProgram)
+             rows.forEach(function(row) {
+                values.push(sprintf("(%d, %d, '%s', '%s', '%s')", dstTour, row.user_id, row.workoutTime, row.workoutGroup, row.workoutProgram));
+             });
+
+            copySQL = sprintf('%s VALUES %s;', sql.copyTourCampersPartial, values.join(', '));
+            connection.query(copySQL, function(err2, rows2) {
+                if (err2) {
+                    handleDisconnect();
+                    console.error(err2);
+                    cb(err2, null);
+                } else {
+                    cb(null, { tourId: dstTour });
+                }
+            });
         }
     });
 };

@@ -38,7 +38,11 @@ exports.insertTour = multiline(function() {/*
         (?, ?, ?, ?, ?, ?, ?, ?, ?)
 */});
 
-/* insert camp:
+exports.copyTourCampersPartial = multiline(function() {/*
+     INSERT INTO camp
+        (tour_id, user_id, workoutTime, workoutGroup, workoutProgram)
+*/});
+/*
     INSERT INTO camp
         (tour_id, user_id)
     VALUES
@@ -60,6 +64,7 @@ exports.selectTourCampers = multiline(function() {/*
         c.user_id,
         u.firstName,
         u.lastName,
+        c.newRecord,
         c.workoutTime,
         c.workoutGroup,
         c.workoutProgram,

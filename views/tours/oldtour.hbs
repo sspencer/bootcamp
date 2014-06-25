@@ -1,0 +1,87 @@
+<ol class="breadcrumb">
+  <li><a href="/tours">Tours</a></li>
+  <li class="active">Tour {{ tour.id }}</li>
+</ol>
+
+
+<div class="container">
+  <div class="page-header">
+    <h1>Tour #{{ tour.id }}</h1>
+  </div>
+
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#">Campers</a></li>
+    <li><a href="/tours/{{tour.id}}/payments">Payments</a></li>
+  </ul>
+  <p>&nbsp;</p>
+
+
+  <div>
+      {{#if tour.open}}
+      <div class="alert alert-info">
+        <span class="glyphicon glyphicon-info-sign"></span>
+        Tour {{tour.id}} runs from {{fmtDate tour.startDate}} to {{fmtDate tour.endDate}} and has <strong>{{tour.participants}}</strong> campers.
+      </div>
+      <a href="/tours/{{tour.id}}/rollcall" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-bullhorn"></span> Rollcall</a>
+      <a href="/tours/{{tour.id}}/stats" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-heart"></span> Stats</a>
+      <a href="/tours/{{tour.id}}/addcamper" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-user"></span> Add Camper</a>
+      {{else}}
+      <div class="alert alert-warning">
+        Tour {{tour.id}} ran from {{fmtDate tour.startDate}} to {{fmtDate tour.endDate}} and had <strong>{{tour.participants}}</strong> campers.
+      </div>
+      {{/if}}
+    </p>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+
+        <tr>
+          <th rowspan=2>{{{sort baseUrl query 'Name'    'name'}}}</th>
+          <th rowspan=2>{{{sort baseUrl query 'Program' 'workoutProgram'}}}</th>
+          <th rowspan=2>{{{sort baseUrl query 'Group'   'workoutGroup'}}}</th>
+          <th rowspan=2>{{{sort baseUrl query 'Time'    'workoutTime'}}}</th>
+          <th rowspan=2 >Attendance</th>
+          <th colspan=6 style="padding:0">
+            <div align=center>
+            Pushups / Situps / Mile
+            </div>
+          </th>
+        </tr>
+        <tr>
+          <th style="border-top-width:0px;"><div align=right>{{{sort baseUrl query 'PU 1' 'pushup1'}}}</div></th>
+          <th style="border-top-width:0px;"><div align=right>{{{sort baseUrl query 'SU 1' 'situp1'}}}</div></th>
+          <th style="border-top-width:0px;"><div align=right>{{{sort baseUrl query 'MI 1' 'mile1'}}}</div></th>
+          <th style="border-top-width:0px;"><div align=right>{{{sort baseUrl query 'PU 2' 'pushup2'}}}</div></th>
+          <th style="border-top-width:0px;"><div align=right>{{{sort baseUrl query 'SU 2' 'situp2'}}}</div></th>
+          <th style="border-top-width:0px;"><div align=right>{{{sort baseUrl query 'MI 2' 'mile2'}}}</div></th>
+        </tr>
+      </thead>
+      <tbody>
+      {{#each campers}}
+      <tr>
+        <td><a href="/campers/{{ user_id }}">{{ firstName }} {{ lastName }}</a></td>
+        <td>{{capitalize workoutProgram}}</td>
+        <td>{{upper workoutGroup }}</td>
+        <td>{{fmtWorkoutTime workoutTime}}</td>
+        <td>
+          {{#if perfect}}
+          <span class="glyphicon glyphicon-star"></span>
+          {{else}}
+          &nbsp;&nbsp;&nbsp;
+          {{/if}}
+          &nbsp;{{attendance}}
+        </td>
+        <td align="right">{{pushup1}}</td>
+        <td align="right">{{situp1}}</td>
+        <td align="right">{{mile mile1}}</td>
+        <td align="right">{{pushup2}}</td>
+        <td align="right">{{situp2}}</td>
+        <td align="right">{{mile mile2}}</td>
+      </tr>
+      {{/each}}
+      </tbody>
+    </table>
+  </div>
+</div>
