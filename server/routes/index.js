@@ -4,7 +4,7 @@ var passport = require('passport'),
     sprintf  = require('sprintf').sprintf,
     auth     = require('./auth'),
     home     = require('./home'),
-    campers  = require('./campers'),
+    user     = require('./user'),
     tours    = require('./tours');
 
 
@@ -43,11 +43,16 @@ module.exports = function(app) {
      *************************************************************************************/
 
     app.get('/', home.index);
-    app.get('/campers', campers.index);
-    app.get('/campers/:camper_id([0-9]{1,6})', campers.camper);
+
+    app.get('/users', user.index);
+    app.get('/users/:camper_id([0-9]{1,6})', user.camper);
+
+    // a record from the camp table (user info from a single camp)
 
     app.get('/tours', tours.index);
     app.get('/tours/:tour_id([0-9]{1,6})', tours.tour);
+    app.get('/tours/:tour_id([0-9]{1,6})/camp/:camp_id([0-9]{1,7})', tours.camper);
+
     app.get('/tours/:tour_id([0-9]{1,6})/rollcall', tours.rollcall);
     app.get('/tours/:tour_id([0-9]{1,6})/stats', tours.stats);
     app.get('/tours/:tour_id([0-9]{1,6})/payments', tours.payments);

@@ -94,6 +94,26 @@ exports.index = function(req, res, next) {
     });
 };
 
+exports.camper = function(req, res, next) {
+    var userId = req.params.camper_id;
+    store.getUser(userId, function(err, results) {
+        var camper = results;
+        if (results) {
+            store.getCampsAttended(userId, function(err, results) {
+
+                res.render('camps/camper', {
+                    camper:   camper,
+                    camps:    results,
+                    title:    sprintf('%s %s', camper.firstName, camper.lastName),
+                    login:    req.user,
+                    tabTours: true});
+            });
+        } else {
+            next(new Error(sprintf("Camper with id %s does not exist", userId)));
+        }
+    });
+};
+
 exports.copy = function(req, res, next) {
     store.copyCampers(55, 56, function(err, result) {
         if (err) {

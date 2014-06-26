@@ -61,6 +61,8 @@ exports.selectTour = multiline(function() {/*
 
 exports.selectTourCampers = multiline(function() {/*
     SELECT
+        c.id camp_id,
+        c.tour_id,
         c.user_id,
         u.firstName,
         u.lastName,

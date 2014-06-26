@@ -1,0 +1,83 @@
+{{#with camper}}
+<ol class="breadcrumb">
+  <li><a href="/users">Users</a></li>
+  <li class="active">{{firstName}} {{lastName}}</li>
+</ol>
+
+<div class="container">
+	<div class="page-header">
+	  <h1>{{firstName}} {{lastName}}</h1>
+	</div>
+
+	<p>
+		{{firstName}} started bootcamp in <strong>{{yearStarted}}</strong>
+		and has attended <strong>{{camps}}</strong> tours so far.
+	</p>
+
+	<div>
+	  <p>
+	    <a href="/campers/{{id}}/addlogin" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-lock"></span> Create Login</a>
+	  </p>
+	  <br>
+	</div>
+
+	<form class="form-horizontal" role="form">
+
+	  <div class="form-group">
+	    <label for="inputFirstName" class="col-sm-2 control-label">First Name</label>
+	    <div class="col-sm-4">
+	      <input class="form-control" id="inputFirstName" value="{{firstName}}">
+	    </div>
+	  </div>
+
+	  <div class="form-group">
+	    <label for="inputLastName" class="col-sm-2 control-label">Last Name</label>
+	    <div class="col-sm-4">
+	      <input class="form-control" id="inputLastName" value="{{lastName}}">
+	    </div>
+	  </div>
+
+	  <div class="form-group">
+	    <label for="inputLastName" class="col-sm-2 control-label">Gender</label>
+
+			<div class="col-sm-10">
+				<div class="radio">
+				  <label><input type="radio" name="optionsGender" value="f" checked> Female</label>
+				</div>
+				<div class="radio">
+				  <label><input type="radio" name="optionsGender" value="m">Male</label>
+				</div>
+			</div>
+		</div>
+
+	  <div class="form-group">
+	    <label for="inputOccupation" class="col-sm-2 control-label">Occupation</label>
+	    <div class="col-sm-4">
+	      <input class="form-control" id="inputOccupation" value="{{occupation}}">
+	    </div>
+	  </div>
+
+	  <div class="form-group">
+	    <label for="inputPet" class="col-sm-2 control-label">Pet</label>
+	    <div class="col-sm-4">
+	      <input class="form-control" id="inputPet" value="{{pet}}">
+	    </div>
+	  </div>
+{{/with}}
+
+	  <div class="form-group">
+	    <label for="AgeRange" class="col-sm-2 control-label">Tours Attended</label>
+	    <div class="col-sm-6">
+	      {{{campsPager camps}}}
+	    </div>
+	    <div class="col-sm-4 help-block">Click on the selected blocks to edit information about that camp.</div>
+	  </div>
+
+	  <div class="form-group">
+	    <div class="col-sm-offset-2 col-sm-10">
+	      <button type="submit" class="btn btn-default">Submit</button>
+	    </div>
+	  </div>
+
+  </form>
+ </div>

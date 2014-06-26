@@ -14,14 +14,14 @@ exports.index = function(req, res, next) {
 
     store.getCampers(selectedLetter, sort, function(err, results) {
         if (results) {
-            res.render('camps/index', {
+            res.render('users/index', {
                 title:          'Campers',
-                login:           req.user,
+                login:          req.user,
                 selectedLetter: selectedLetter,
                 baseUrl:        '/campers',
                 query:          req.query,
                 campers:        results,
-                tabCampers:     true});
+                tabUsers:       true});
         }
     });
 };
@@ -33,12 +33,12 @@ exports.camper = function(req, res, next) {
         if (results) {
             store.getCampsAttended(userId, function(err, results) {
 
-                res.render('camps/camper', {
-                    camper:     camper,
-                    camps:      results,
-                    title:      sprintf('%s %s', camper.firstName, camper.lastName),
-                    login:      req.user,
-                    tabCampers: true});
+                res.render('users/camper', {
+                    camper:   camper,
+                    camps:    results,
+                    title:    sprintf('%s %s', camper.firstName, camper.lastName),
+                    login:    req.user,
+                    tabUsers: true});
             });
         } else {
             next(new Error(sprintf("Camper with id %s does not exist", userId)));

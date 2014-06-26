@@ -51,10 +51,13 @@
       {{#each campers}}
         {{#if newRecord}}
       <tr class="warning">
-        <td><span class="glyphicon glyphicon-asterisk"></span> <a href="/campers/{{ user_id }}">{{ firstName }} {{ lastName }}</a></td>
+        <td>
+          <span class="glyphicon glyphicon-asterisk"></span>
+          <a href="/tours/{{ tour_id }}/camp/{{ camp_id }}">{{ firstName }} {{ lastName }}</a>
+        </td>
       {{else}}
       <tr>
-        <td><a href="/campers/{{ user_id }}">{{ firstName }} {{ lastName }}</a></td>
+        <td><a href="/tours/{{ tour_id }}/camp/{{ camp_id }}">{{ firstName }} {{ lastName }}</a></td>
       {{/if}}
         <td>{{capitalize workoutProgram}}</td>
         <td>{{upper workoutGroup }}</td>
