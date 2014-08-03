@@ -42,9 +42,11 @@
 
         <tr>
           <th>{{{sort baseUrl query 'Name'    'name'}}}</th>
+          <th>Attendance</th>
           <th>{{{sort baseUrl query 'Program' 'workoutProgram'}}}</th>
           <th>{{{sort baseUrl query 'Group'   'workoutGroup'}}}</th>
           <th>{{{sort baseUrl query 'Time'    'workoutTime'}}}</th>
+          <th>{{{sort baseUrl query 'Payment' 'payment'}}}</th>
         </tr>
       </thead>
       <tbody>
@@ -59,9 +61,11 @@
       <tr>
         <td><a href="/tours/{{ tour_id }}/camp/{{ camp_id }}">{{ firstName }} {{ lastName }}</a></td>
       {{/if}}
+        <td>{{attendance}} perfect:{{perfect}}</td>
         <td>{{capitalize workoutProgram}}</td>
         <td>{{upper workoutGroup }}</td>
         <td>{{fmtWorkoutTime workoutTime}}</td>
+        <td>{{paymentMethod}}{{#if paymentNote}}: {{paymentNote}}{{/if}}</td>
       </tr>
       {{/each}}
       </tbody>

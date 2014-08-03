@@ -76,7 +76,9 @@ exports.selectTourCampers = multiline(function() {/*
         c.pushup1,
         c.pushup2,
         c.situp1,
-        c.situp2
+        c.situp2,
+        c.paymentMethod,
+        c.paymentNote
     FROM
         camp c,
         user u

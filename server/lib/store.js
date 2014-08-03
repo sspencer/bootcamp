@@ -49,6 +49,8 @@ var TourSort = {
     '-push2':          'push2 DESC, firstName ASC, lastName ASC',
     'mile2':           'mile2 ASC, firstName ASC, lastName ASC',
     '-mile2':          'mile2 DESC, firstName ASC, lastName ASC',
+    'payment':         'paymentMethod ASC, paymentNote ASC, firstName ASC, lastName ASC',
+    '-payment':        'paymentMethod DESC, paymentNote DESC, firstName ASC, lastName ASC',
 };
 
 
