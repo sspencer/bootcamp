@@ -13,3 +13,14 @@ Web app for my local (exercise) bootcamp using combination of Node/Express using
 
 
 ALTER TABLE `camp` CHANGE `newRecord` `newRecord` TINYINT NOT NULL DEFAULT '0';
+
+
+August 2014 Notes
+
+Forgot campers route - instead, users page always shows latest camp
+Route something like users/75:55 (user_id:camp_id)
+User Page shows:
+    user record (editable)
+    camp record (editable)
+    camps attended table
+    tabs could show historical results
