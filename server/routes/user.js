@@ -31,32 +31,35 @@ exports.user = function(req, res, next) {
     var userId = req.params.user_id;
     var campId = req.query.camp_id || 0;
 
-    store.getUser(userId, function(err, results) {
-        var camper = results;
-        if (results) {
-            store.getCampsAttended(userId, function(err, results) {
-                var obj;
-                if (campId > 0) {
-                    // campId set - find the corresponding tourId
-                    obj = _.find(results, function(t) { return t.id == campId; });
-                } else {
-                    // campId not set - return most recent tour
-                    obj = _.last(results);
-                }
+    store.getCampsAttended(userId, function(err, camps) {
+        var obj;
 
-                obj = obj || { tour_id: 0};
-                camper.tourId = obj.tour_id || 0;
+        if (campId > 0) {
+            // campId set - find the corresponding tourId
+            obj = _.find(camps, function(t) { return t.id == campId; });
+        } else {
+            // campId not set - return most recent tour
+            obj = _.last(camps);
+        }
+
+        obj = obj || { tour_id: 0};
+
+        // 2014 08 09 - pass in tourId and JOIN when tourId != 0 (or join
+        // on campId but that could be faked where we just verified tourId)
+        store.getUser(userId, function(err, user) {
+            if (user) {
+                user.tourId = obj.tour_id || 0;
 
                 res.render('users/user', {
-                    camper:   camper,
-                    camps:    results,
+                    camper:   user,
+                    camps:    camps,
                     campId:   campId,
-                    title:    sprintf('%s %s', camper.firstName, camper.lastName),
+                    title:    sprintf('%s %s', user.firstName, user.lastName),
                     login:    req.user,
                     tabUsers: true});
-            });
-        } else {
-            next(new Error(sprintf("Camper with id %s does not exist", userId)));
-        }
+            } else {
+                next(new Error(sprintf("Camper with id %s does not exist", userId)));
+            }
+        });
     });
 };
