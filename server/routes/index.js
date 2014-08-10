@@ -26,7 +26,7 @@ module.exports = function(app) {
      * NOTE: This statement must come before all other routes to keep the pages secure
      */
     app.use('/tours',   ensureAuthenticated);
-    app.use('/campers', ensureAuthenticated);
+    app.use('/users', ensureAuthenticated);
 
     /*************************************************************************************
      * Login Pages
@@ -45,7 +45,7 @@ module.exports = function(app) {
     app.get('/', home.index);
 
     app.get('/users', user.index);
-    app.get('/users/:camper_id([0-9]{1,6})', user.camper);
+    app.get('/users/:user_id([0-9]{1,6})', user.user); // maybe also have ?camp_id=1234
 
     // a record from the camp table (user info from a single camp)
 

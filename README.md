@@ -17,8 +17,13 @@ ALTER TABLE `camp` CHANGE `newRecord` `newRecord` TINYINT NOT NULL DEFAULT '0';
 
 August 2014 Notes
 
-Forgot campers route - instead, users page always shows latest camp
-Route something like users/75:55 (user_id:camp_id)
+Only can add users thru a tour (tour page has Add User button).
+
+User Routes:
+
+/users/75              --- show most recent camp
+/users/75?camp_id=4581 --- show that camp
+
 User Page shows:
     user record (editable)
     camp record (editable)

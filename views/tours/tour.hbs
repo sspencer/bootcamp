@@ -54,14 +54,12 @@
         {{#if newRecord}}
       <tr class="warning">
         <td>
-          <a href="/campers/{{ camp_id }}">{{ firstName }} {{ lastName }}</a>
-          <a href="/users/{{ user_id }}">uid</a>
+          <a href="/users/{{user_id}}?camp_id={{ camp_id }}">{{ firstName }} {{ lastName }}</a>
         </td>
       {{else}}
       <tr>
         <td>
-          <a href="/campers/{{ camp_id }}">{{ firstName }} {{ lastName }}</a>
-          <a href="/users/{{ user_id }}">uid</a>
+          <a href="/users/{{user_id}}?camp_id={{ camp_id }}">{{ firstName }} {{ lastName }}</a>
         </td>
       {{/if}}
         <td>{{attendance}} perfect:{{perfect}}</td>
