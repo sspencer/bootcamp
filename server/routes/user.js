@@ -36,7 +36,7 @@ exports.user = function(req, res, next) {
 
         if (campId > 0) {
             // campId set - find the corresponding tourId
-            obj = _.find(camps, function(t) { return t.id == campId; });
+            obj = _.find(camps, function(t) { return t.id === campId; });
         } else {
             // campId not set - return most recent tour
             obj = _.last(camps);

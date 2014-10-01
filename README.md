@@ -29,3 +29,10 @@ User Page shows:
     camp record (editable)
     camps attended table
     tabs could show historical results
+
+
+## Reports
+
+Export report as CSV file:
+
+    select tour_id, workoutProgram, count(workoutProgram) INTO OUTFILE '/tmp/result.csv' FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\n' from camp group by tour_id, workoutProgram;

@@ -70,7 +70,7 @@ exports.campsPager = function(camps, selectedCamp) {
 
     for (i = 1; i <= maxTour; i++) {
         if (map[String(i)]) {
-            if (map[String(i)] == selectedCamp) {
+            if (map[String(i)] === selectedCamp) {
                 html.push('<li class="selected"><a href="?camp_id=' + map[String(i)] + '">' + i + '</a></li>');
             } else {
                 html.push('<li class="active"><a href="?camp_id=' + map[String(i)] + '">' + i + '</a></li>');

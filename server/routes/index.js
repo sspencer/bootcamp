@@ -1,7 +1,6 @@
 'use strict';
 
 var passport = require('passport'),
-    sprintf  = require('sprintf').sprintf,
     auth     = require('./auth'),
     home     = require('./home'),
     user     = require('./user'),
