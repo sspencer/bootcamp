@@ -4,20 +4,25 @@
  * Express Dependencies
  */
 var express    = require('express'),
-    exphbs     = require('express3-handlebars'),
-    config     = require('./config'),
-    redis      = require('./server/lib/redis'),
-    RedisStore = require('connect-redis')(express),
-    routes     = require('./server/routes'),
-    userauth   = require('./server/lib/userauth'),
-    helpers    = require('./server/lib/helpers'),
-    app        = express();
+    exphbs         = require('express-handlebars'),
+    config         = require('./config'),
+    bodyParser     = require('body-parser'),
+    csrf           = require('csurf'),
+    cookieParser   = require('cookie-parser'),
+    methodOverride = require('method-override'),
+    redis          = require('./server/lib/redis'),
+    morgan         = require('morgan'),
+    session        = require('express-session'),
+    RedisStore     = require('connect-redis')(session),
+    routes         = require('./server/routes'),
+    userauth       = require('./server/lib/userauth'),
+    helpers        = require('./server/lib/helpers'),
+    app            = express();
 
-app.locals({
-  dev: app.get('env') === 'development',
-  ServerName: config.name,
-  ServerVersion: config.version
-});
+app.locals.dev = app.get('env') === 'development';
+app.locals.ServerName = config.name;
+app.locals.ServerVersion = config.version;
+
 
 app.set('port', config.server.port);
 
@@ -30,7 +35,7 @@ function developmentApp() {
         helpers:       helpers
     });
 
-    app.use(express.logger({format:'dev'}));
+    morgan('dev');
 
     app.engine('hbs', hbs.engine);
     app.set('views', __dirname + '/views');
@@ -49,7 +54,7 @@ function productionApp() {
         helpers:       helpers
     });
 
-    app.use(express.logger({format:'default'}));
+    morgan('combined');
 
     app.engine('hbs', hbs.engine);
     app.enable('view cache');
@@ -66,15 +71,17 @@ if (app.get('env') === 'development') {
     productionApp();
 }
 
-app.use(express.urlencoded());
-app.use(express.methodOverride());
-app.use(express.cookieParser());
-app.use(express.session({
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(methodOverride());
+app.use(cookieParser());
+app.use(session({
     secret: config.server.session_secret,
     store:  new RedisStore({client: redis, prefix: 'sess:' }),
-    cookie: { maxAge:null } // cookie: { maxAge:24*3600*1000 }
+    cookie: { maxAge:null }, // cookie: { maxAge:24*3600*1000 }
+    resave: true,
+    saveUninitialized: true
 }));
-app.use(express.csrf());
+app.use(csrf());
 
 
 userauth(app);
