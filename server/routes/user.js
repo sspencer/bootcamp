@@ -1,6 +1,7 @@
 'use strict';
 
 var store   = require('../lib/store'),
+    async   = require('async'),
     sprintf = require('sprintf').sprintf,
     _       = require('lodash');
 
@@ -28,6 +29,52 @@ exports.index = function(req, res, next) {
 };
 
 exports.user = function(req, res, next) {
+    var userId = req.params.user_id;
+    var campId = req.query.camp_id || 0;
+
+    async.parallel([
+            function(done) { store.getCampsAttended(userId, done); },
+            function(done) { store.getCamp(campId, done); },
+            function(done) { store.getUser(userId, done); }
+        ],
+        function(err, results) {
+
+            if (err) {
+                next(new Error(sprintf("Camper with id %s does not exist", userId)));
+                return;
+            }
+
+            var camps = results[0];
+            var camp = results[1];
+            var user = results[2];
+            var obj;
+
+            console.log(results);
+
+            if (campId > 0) {
+                // campId set - find the corresponding tourId
+                obj = _.find(camps, function(t) { return t.id === campId; });
+            } else {
+                // campId not set - return most recent tour
+                obj = _.last(camps);
+            }
+
+            obj = obj || { tour_id: 0};
+            user.tourId = obj.tour_id || 0;
+
+            res.render('users/user', {
+                camper:   user,
+                camps:    camps,
+                campId:   campId,
+                title:    sprintf('%s %s', user.firstName, user.lastName),
+                login:    req.user,
+                tabUsers: true});
+        }
+    );
+
+};
+
+exports.userPREVIOUS = function(req, res, next) {
     var userId = req.params.user_id;
     var campId = req.query.camp_id || 0;
 

@@ -197,6 +197,23 @@ exports.getUser = function(userId, cb) {
     });
 };
 
+exports.getCamp = function(campId, cb) {
+    if (campId === 0) {
+        cb(null, []);
+    } else {
+        connection.query(sql.selectCamp, [campId], function(err, rows) {
+            if (err) {
+                handleDisconnect();
+                console.error(err);
+                cb(err, null);
+            } else {
+                cb(null, rows[0]);
+            }
+        });
+    }
+};
+
+
 exports.getCampsAttended = function(userId, cb) {
     connection.query(sql.selectCampsAttended, [userId], function(err, rows) {
         if (err) {
