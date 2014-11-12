@@ -29,8 +29,8 @@ exports.index = function(req, res, next) {
 };
 
 exports.user = function(req, res, next) {
-    var userId = req.params.user_id;
-    var campId = req.query.camp_id || 0;
+    var userId = _.parseInt(req.params.user_id);
+    var campId = _.parseInt(req.query.camp_id) || 0;
 
     async.parallel([
             function(done) { store.getCampsAttended(userId, done); },
@@ -48,8 +48,6 @@ exports.user = function(req, res, next) {
             var camp = results[1];
             var user = results[2];
             var obj;
-
-            console.log(results);
 
             if (campId > 0) {
                 // campId set - find the corresponding tourId
