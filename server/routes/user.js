@@ -60,6 +60,9 @@ exports.user = function(req, res, next) {
             obj = obj || { tour_id: 0};
             user.tourId = obj.tour_id || 0;
 
+            console.log(user);
+            console.log(camp);
+
             res.render('users/user', {
                 camper:   user,
                 camps:    camps,
