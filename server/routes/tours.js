@@ -60,7 +60,7 @@ exports.addValidator = form(
     field("dropinPrice").required().isInt());
 
 
-
+/*
 function addUsersToTour(tourId) {
     // add flag to camp "if never edited"
     // add defaults to camp
@@ -77,7 +77,7 @@ function createTour(req) {
         }
     });
 }
-
+*/
 
 
 

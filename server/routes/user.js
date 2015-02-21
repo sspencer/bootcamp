@@ -3,7 +3,7 @@
 var store   = require('../lib/store'),
     async   = require('async'),
     sprintf = require('sprintf').sprintf,
-    _       = require('lodash');
+    lo      = require('lodash');
 
 
 exports.index = function(req, res, next) {
@@ -29,8 +29,8 @@ exports.index = function(req, res, next) {
 };
 
 exports.user = function(req, res, next) {
-    var userId = _.parseInt(req.params.user_id);
-    var campId = _.parseInt(req.query.camp_id) || 0;
+    var userId = lo.parseInt(req.params.user_id);
+    var campId = lo.parseInt(req.query.camp_id) || 0;
 
     async.parallel([
             function(done) { store.getCampsAttended(userId, done); },
@@ -51,10 +51,10 @@ exports.user = function(req, res, next) {
 
             if (campId > 0) {
                 // campId set - find the corresponding tourId
-                obj = _.find(camps, function(t) { return t.id === campId; });
+                obj = lo.find(camps, function(t) { return t.id === campId; });
             } else {
                 // campId not set - return most recent tour
-                obj = _.last(camps);
+                obj = lo.last(camps);
             }
 
             obj = obj || { tour_id: 0};
@@ -84,10 +84,10 @@ exports.userPREVIOUS = function(req, res, next) {
 
         if (campId > 0) {
             // campId set - find the corresponding tourId
-            obj = _.find(camps, function(t) { return t.id === campId; });
+            obj = lo.find(camps, function(t) { return t.id === campId; });
         } else {
             // campId not set - return most recent tour
-            obj = _.last(camps);
+            obj = lo.last(camps);
         }
 
         obj = obj || { tour_id: 0};
